@@ -1,6 +1,6 @@
 using System;
 using BangazonCli;
-using Customer;
+// using BangazonCLI;
 using System.Collections.Generic;
 using Xunit;
 
@@ -27,34 +27,16 @@ namespace BangazonCli.Test {
                 "TN",
                 "37027",
                 "615-555-1234",
-                "1962-11-25",
-                "1992-01-22"
+                DateTime.Now,
+                DateTime.Now
             );
 
         }
 
         [Fact]
-        public void GetAllCustomers () {
-            CustomerManager manager = new CustomerManager ();
-
-            manager.Add (_customer);
-
-            List<Customer> allCustomers = manager.GetAllCustomers ();
-
-            Assert.Contains (_customer, allCustomers);
+        public void CreateCustomer () {
+            Assert.Contains (_customer.FirstName, "Chaz");
         }
-
-        // [Fact]
-        // public void GetSingleCustomer () {
-        //     JobManager manager = new JobManager ();
-        //     manager.Add (_job);
-        //     Job theJob = manager.GetSingleJob (1);
-
-        //     Assert.Equal (theJob.Id, 1);
-        //     Assert.Equal (theJob.Description, "We need cheap labor");
-        //     Assert.Equal (theJob.Title, "Junior Developer");
-
-        // }
 
     }
 }
