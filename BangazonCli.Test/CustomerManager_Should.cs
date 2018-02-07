@@ -51,7 +51,7 @@ namespace BangazonCli.Test {
         } 
         [Fact]
         public void ActivateCustomer () {
-
+            CustomerManager manager = new CustomerManager ();
         }
 
         [Fact]
