@@ -19,7 +19,7 @@ namespace BangazonCli
 
         public Product GetSingleProduct(int id)
         {
-            return _productTable.Where(c => c.Id == id).Single();
+            return _productTable.Where(p => p.Id == id).Single();
         }
     }
 }
