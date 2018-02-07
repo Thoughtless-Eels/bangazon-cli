@@ -8,7 +8,7 @@ namespace BangazonCli.Test
         [Fact]
         public void Test1()
         {
-
+            
         }
     }
 }
