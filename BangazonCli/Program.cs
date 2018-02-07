@@ -6,7 +6,7 @@ namespace BangazonCli
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            Console.WriteLine("You can do anything you want");
         }
     }
 }
