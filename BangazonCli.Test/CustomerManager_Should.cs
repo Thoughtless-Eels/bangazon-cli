@@ -5,18 +5,44 @@ using System.Collections.Generic;
 using Xunit;
 
 namespace BangazonCli.Test {
-
     public class CustomerManager_Should {
-        // [Fact]
-        // public void GetAllCustomers () {
-        //     CustomerManager manager = new CustomerManager ();
+    private Customer _customer;
+     public CustomerManager_Should () {
+         
+            /*Constuctor Method :
+            PK  CustomerId
+                FirstName
+                LastName
+                City
+                State
+                PostalCode
+                phone
+                CreatedOn
+                LastLogin
+            */
+            _customer = new Customer (
+                1,
+                "Chaz",
+                "Vanderbilt",
+                "Brentwood",
+                "TN",
+                "37027",
+                "615-555-1234",
+                DateTime.Now,
+                DateTime.Now
+            );
+        }
 
-        //     manager.Add (_customer);
+        [Fact]
+        public void GetAllCustomers () {
+            CustomerManager manager = new CustomerManager ();
 
-        //     List<Customer> allCustomers = manager.GetAllCustomers ();
+            manager.Add (_customer);
 
-        //     Assert.Contains (_customer, allCustomers);
-        // }
+            List<Customer> allCustomers = manager.GetAllCustomers ();
+
+            Assert.Contains (_customer, allCustomers);
+        }
 
         // [Fact]
         // public void GetSingleCustomer () {

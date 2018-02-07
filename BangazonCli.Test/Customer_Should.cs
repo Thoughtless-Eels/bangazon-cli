@@ -30,13 +30,11 @@ namespace BangazonCli.Test {
                 DateTime.Now,
                 DateTime.Now
             );
-
         }
 
         [Fact]
         public void CreateCustomer () {
             Assert.Contains (_customer.FirstName, "Chaz");
         }
-
     }
 }
