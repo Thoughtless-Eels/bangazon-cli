@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using Xunit;
 
 namespace BangazonCli.Test {
-
     public class CustomerManager_Should {
         private Customer _customer;
         public CustomerManager_Should() {
