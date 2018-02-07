@@ -7,9 +7,15 @@ namespace BangazonCli
     {
         private List<Customer> _customerTable = new List<Customer>();
 
+        public int ActiveCustomerId;
+
         public void Add(Customer Chaz)
         {
             _customerTable.Add(Chaz);
+        }
+        public void ActivateCustomer(int Id)
+        {
+            ActiveCustomerId = Id;
         }
 
         public List<Customer> GetAllCustomers ()

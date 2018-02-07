@@ -3,11 +3,14 @@ using BangazonCli;
 using System.Collections.Generic;
 using Xunit;
 
-namespace BangazonCli.Test {
-    public class CustomerManager_Should {
+namespace BangazonCli.Test
+{
+    public class CustomerManager_Should
+    {
         private Customer _customer;
-        public CustomerManager_Should() {
-            _customer = new Customer (
+        public CustomerManager_Should()
+        {
+            _customer = new Customer(
                 1,
                 "Chaz",
                 "Vanderbilt",
@@ -19,60 +22,48 @@ namespace BangazonCli.Test {
                 DateTime.Now
             );
         }
-        
+
 
         [Fact]
-        public void GetAllCustomers () {
+        public void GetAllCustomers()
+        {
 
-            CustomerManager manager = new CustomerManager ();
+            CustomerManager manager = new CustomerManager();
 
 
-            manager.Add (_customer);
+            manager.Add(_customer);
 
-            List<Customer> allCustomers = manager.GetAllCustomers ();
+            List<Customer> allCustomers = manager.GetAllCustomers();
 
-            Assert.Contains (_customer, allCustomers);
+            Assert.Contains(_customer, allCustomers);
         }
 
         [Fact]
-        public void GetSingleCustomer () {
-            CustomerManager manager = new CustomerManager ();
-            manager.Add (_customer);
-            Customer theCustomer = manager.GetSingleCustomer (1);
+        public void GetSingleCustomer()
+        {
+            CustomerManager manager = new CustomerManager();
+            manager.Add(_customer);
+            Customer theCustomer = manager.GetSingleCustomer(1);
 
-            Assert.Equal (1, theCustomer.Id);
-            Assert.Equal ("Chaz", theCustomer.FirstName);
-            Assert.Equal ("Vanderbilt", theCustomer.LastName);
-            Assert.Equal ("Brentwood",theCustomer.City);
-            Assert.Equal ("TN", theCustomer.State);
-            Assert.Equal ("37027", theCustomer.PostalCode);
-            Assert.Equal ("615-555-1234",theCustomer.PhoneNumber);
-        } 
+            Assert.Equal(1, theCustomer.Id);
+            Assert.Equal("Chaz", theCustomer.FirstName);
+            Assert.Equal("Vanderbilt", theCustomer.LastName);
+            Assert.Equal("Brentwood", theCustomer.City);
+            Assert.Equal("TN", theCustomer.State);
+            Assert.Equal("37027", theCustomer.PostalCode);
+            Assert.Equal("615-555-1234", theCustomer.PhoneNumber);
+        }
         [Fact]
-        public void ActivateCustomer () {
-            CustomerManager manager = new CustomerManager ();
+        public void ActivateCustomer_Should()
+        {
+            CustomerManager manager = new CustomerManager();
+            manager.Add(_customer);
+            manager.ActivateCustomer(1);
+
+            Assert.Equal(1, manager.ActiveCustomerId);
         }
 
-        [Fact]
-        public void AddCustomerPayment () {
-            
-        }
 
-        [Fact]
-        public void AddCustomerProduct () {
-
-        }
-
-        [Fact]
-        public void AddProductToOrder () {
-
-        }
-        
-        //Will this go in an OrderManager?
-        [Fact]
-        public void CompleteOrder () {
-
-        }
 
     }
 }
