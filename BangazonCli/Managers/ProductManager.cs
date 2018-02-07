@@ -11,7 +11,7 @@ namespace BangazonCli
         {
             _productTable.Add(ToothBrush);
         }
-
+        
         public List<Product> GetAllProducts ()
         {
             return _productTable;
@@ -20,6 +20,13 @@ namespace BangazonCli
         public Product GetSingleProduct(int id)
         {
             return _productTable.Where(p => p.Id == id).Single();
+        }
+
+
+
+        public void UpdatePrice(Product product, double price)
+        {
+            product.Price = price;
         }
     }
 }
