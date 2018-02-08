@@ -1,6 +1,6 @@
 using System;
 
-namespace bangazon_cli.Menus
+namespace BangazonCli.Menu
 {
     public class MainMenu
     {
