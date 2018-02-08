@@ -18,6 +18,7 @@ namespace BangazonCli.Test {
             // Need to pull the instance of _product and _customer together
 
             // Assert that the table contains CustomerId on product
+            
 
 
         }
