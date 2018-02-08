@@ -4,7 +4,7 @@ namespace BangazonCli
 {
     public class Order
     {
-        public string OrderId {get; set;}
+        public string Id {get; set;}
         public string PaymentId {get; set;}
         public string CustomerId {get; set;}
         public DateTime CompletedOn {get; set;}
@@ -13,7 +13,7 @@ namespace BangazonCli
         public Order (string orderId, string paymentId, string customerId, 
         DateTime completedOn, DateTime startedOn) 
         {
-            OrderId = orderId;
+            Id = orderId;
             PaymentId = paymentId;
             CustomerId = customerId;
             CompletedOn = completedOn;
