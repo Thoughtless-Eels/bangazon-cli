@@ -1,8 +1,14 @@
+// Create the Customer Model:
+
 using System;
 
 namespace BangazonCli {
     public class Customer {
+
+        // Create a Private Key for the Customer Id:
         public int Id { get; set; }
+
+        // Setting the Properties tied to Customer:
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string City { get; set; }
