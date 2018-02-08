@@ -1,39 +1,30 @@
 using System;
 using BangazonCli;
-// using BangazonCLI;
 using System.Collections.Generic;
 using Xunit;
 
-namespace BangazonCli.Test
-{
-    public class Product_Should
-    {
+namespace BangazonCli.Test {
+    public class ProductManager_Should {
         private Product _product;
-        public Product_Should()
-        {
-            /*Constuctor Method :
-            PK  ProductId
-            */
-            // _product = new Product (
-
-            // );
+        private DateTime dt = DateTime.Now;
+   
+        [Fact]
+        public void CreateProduct () {
+            // Assert.Contains (_product.Name, "Book");
         }
 
         [Fact]
-        public void CreateProduct()
-        {
-            // Assert.Contains (_product.KEY, "EXAMPLE");
-        }
+        public void AddProductToCustomer () {
+            // Need to pull the instance of _product and _customer together
 
-        [Fact]
-        public void AddCustomerProduct()
-        {
+            // Assert that the table contains CustomerId on product
+            
+
 
         }
 
         [Fact]
-        public void AddProductToOrder()
-        {
+        public void AddProductToOrder () {
 
         }
     }
