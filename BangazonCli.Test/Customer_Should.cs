@@ -1,6 +1,6 @@
 using System;
 using BangazonCli;
-using Systaem.Collections.Generic;
+using System.Collections.Generic;
 using Xunit;
 
 namespace BangazonCli.Test {
