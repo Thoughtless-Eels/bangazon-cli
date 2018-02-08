@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace BangazonCli
 {
@@ -10,14 +11,13 @@ namespace BangazonCli
         public DateTime CompletedOn {get; set;}
         public DateTime StartedOn {get; set;}
         
-        public Order (string orderId, string paymentId, string customerId, 
-        DateTime completedOn, DateTime startedOn) 
+        public Order (int orderId, int customerId, int paymentId, DateTime startedOn) 
         {
             Id = orderId;
             PaymentId = paymentId;
             CustomerId = customerId;
-            CompletedOn = completedOn;
             StartedOn = startedOn;
+            PaymentId = paymentId;
         }
 
     }
