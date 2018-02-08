@@ -14,7 +14,11 @@ namespace BangazonCli.Test {
         }
 
         [Fact]
-        public void AddCustomerProduct () {
+        public void AddProductToCustomer () {
+            // Need to pull the instance of _product and _customer together
+
+            // Assert that the table contains CustomerId on product
+
 
         }
 
