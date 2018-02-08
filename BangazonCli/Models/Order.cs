@@ -1,23 +1,21 @@
 using System;
+using System.Collections.Generic;
 
 namespace BangazonCli
 {
     public class Order
     {
-        public string OrderId {get; set;}
-        public string PaymentId {get; set;}
-        public string CustomerId {get; set;}
-        public DateTime CompletedOn {get; set;}
+        public int OrderId {get; set;}
+        public int PaymentId {get; set;}
+        public int CustomerId {get; set;}
         public DateTime StartedOn {get; set;}
         
-        public Order (string orderId, string paymentId, string customerId, 
-        DateTime completedOn, DateTime startedOn) 
+        public Order (int orderId, int customerId, int paymentId, DateTime startedOn) 
         {
             OrderId = orderId;
-            PaymentId = paymentId;
             CustomerId = customerId;
-            CompletedOn = completedOn;
             StartedOn = startedOn;
+            PaymentId = paymentId;
         }
 
     }
