@@ -12,5 +12,17 @@ namespace BangazonCli
             Orders.Add(order);
         }
 
+        public void CompleteOrder(int orderId, int paymentTypeId)
+        {
+
+                foreach(Order o in Orders)
+                {
+                    if (o.OrderId == orderId)
+                    {
+                        o.PaymentId = paymentTypeId;
+                    }
+                }
+        }
+
     }
 }
