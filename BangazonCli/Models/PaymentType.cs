@@ -8,7 +8,6 @@ namespace BangazonCli
         public string AccountNumber { get; set; }
         public string Name { get; set; }
         public int CustomerId { get; set; }
-        public Customer Customer { get; set; }
         public PaymentType(int id, string name, string accountNumber, int customerId)
         {
             this.PaymentTypeId = id;
