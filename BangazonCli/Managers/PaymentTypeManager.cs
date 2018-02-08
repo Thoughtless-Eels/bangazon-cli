@@ -14,8 +14,10 @@ namespace BangazonCli
 
         }
 
-
-
+        public List<PaymentType> GetAllPaymentTypes()
+        {
+            return _paymentTypeTable;
+            }
 
 
 
