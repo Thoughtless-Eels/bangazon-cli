@@ -36,7 +36,6 @@ namespace BangazonCli.Test
                 DateTime.Now,
                 DateTime.Now
             );
-
         }
         // Assert what you want to run for your test:
         // Add properties to the instance you created:
@@ -45,6 +44,5 @@ namespace BangazonCli.Test
         {
             Assert.Contains(_customer.FirstName, "Chaz");
         }
-
     }
 }
