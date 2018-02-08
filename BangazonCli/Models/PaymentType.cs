@@ -7,7 +7,7 @@ namespace BangazonCli
     {
 
         // Create a Primary Key for the Payment Type Id:
-        public int PaymentTypeId { get; set; }
+        public int Id { get; set; }
 
         // Properties for the PAayment Type Table:
         public string AccountNumber { get; set; }
@@ -30,7 +30,7 @@ namespace BangazonCli
         // Constructor for Payment Type with it's parameters:
         public PaymentType(int id, string name, string accountNumber, int customerId)
         {
-            this.PaymentTypeId = id;
+            this.Id = id;
             this.Name = name;
             this.AccountNumber = accountNumber;
             this.CustomerId = customerId;
