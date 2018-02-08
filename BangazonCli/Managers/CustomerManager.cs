@@ -1,15 +1,23 @@
 using System.Collections.Generic;
 using System.Linq;
 
+
+
 namespace BangazonCli
 {
     public class CustomerManager
     {
-        private List<Customer> _customerTable = new List<Customer>();
+        public List<Customer> _customerTable = new List<Customer>();
 
-        public void Add(Customer Chaz)
+        public int ActiveCustomerId;
+
+        public void Add(Customer monkeybutt)
         {
-            _customerTable.Add(Chaz);
+            _customerTable.Add(monkeybutt);
+        }
+        public void ActivateCustomer(int Id)
+        {
+            ActiveCustomerId = Id;
         }
 
         public List<Customer> GetAllCustomers ()
