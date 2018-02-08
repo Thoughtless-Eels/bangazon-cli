@@ -21,8 +21,20 @@ namespace BangazonCli.Test.bin
             );
         }
 
+        // List Payment Type Manager:
+        [Fact]
+        public void GetAllPaymentType_Should()
+        {
+
+            PaymentTypeManager manager = new PaymentTypeManager();
+
+            manager.AddPaymentType(_paymenttype);
+            List<PaymentType> paymentList = manager.GetAllPaymentTypes();
+            Assert.Contains(_paymenttype, paymentList);
+        }
 
 
+        // Add Payment Manager Should:
         [Fact]
         public void AddPaymentType_Should()
         {
