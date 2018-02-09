@@ -1,5 +1,6 @@
 using System;
 using BangazonCli;
+using Microsoft.Data.Sqlite;
 using System.Collections.Generic;
 using Xunit;
 
@@ -10,8 +11,6 @@ namespace BangazonCli.Test {
         private PaymentType _paymentType;
         private Customer _customer;
         private Product _product;
-        private DatabaseManager _dbManager;
-        _dbManager = new DatabaseManager("BangazonTestDB");
 
         private DateTime _dt = DateTime.Now;
 
@@ -28,30 +27,15 @@ namespace BangazonCli.Test {
                 _dt
             );
 
-
-        public OrderManager_Should()
-        {
-            _customer = new Customer(
-           1,
-           "Chaz",
-           "Vanderbilt",
-           "Brentwood",
-           "TN",
-           "37027",
-           "615-555-1234",
-           _dt,
-           _dt
-             );
-
-            _product = new Product(
-            1,
-            4,
-            12.55,
-            "Book",
-            "A Handcrafted book about See Sherp",
-            2,
-            72,
-            _dt
+            _product = new Product (
+                1,
+                4,
+                12.55,
+                "Book",
+                "A Handcrafted book about See Sherp",
+                2,
+                72,
+                _dt
             );
         }
 
@@ -59,7 +43,7 @@ namespace BangazonCli.Test {
         public void CreateNewOrder () {
 
             CustomerManager customerManager = new CustomerManager ();
-            OrderManager orderManager = new OrderManager ();
+            OrderManager orderManager = new OrderManager ("BangazonTestDB");
             customerManager.Add (_customer);
             customerManager.ActivateCustomer (_customer.Id);
 
@@ -70,9 +54,9 @@ namespace BangazonCli.Test {
                 _dt
             );
 
-            orderManager.StoreOrder (_order);
+            Order updatedOrder = orderManager.StoreOrder (_order);
 
-            Assert.Contains (_order, orderManager.Orders);
+            Assert.Equal (customerManager.ActiveCustomerId, updatedOrder.CustomerId);
 
         }
 
