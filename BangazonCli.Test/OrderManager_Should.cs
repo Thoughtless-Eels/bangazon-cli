@@ -14,7 +14,6 @@ namespace BangazonCli.Test
         private Product _product;
 
         private DateTime _dt = DateTime.Now;
-        private DateTime? _nullDt = null;
 
 
         public OrderManager_Should()
