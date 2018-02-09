@@ -57,8 +57,6 @@ namespace BangazonCli.Test {
             Assert.Equal (_product.Id, 1);
         }
 
-        [Fact]
-        public void AddProductToCustomer () {
 
             // Pull the instance of _product and _customer together
 
@@ -66,6 +64,13 @@ namespace BangazonCli.Test {
 
             // Assert that the table contains CustomerId on product - Assert.
             // Assert.Contains (_product.CustomerId, 4);
+   [Fact]
+        public void AddProductToCustomer()
+        {
+            ProductManager productmanager = new ProductManager();
+            manager.ProductManager(_product);
+
+            Assert.Contains(_product, manager._productManagerTable);
         }
 
         [Fact]

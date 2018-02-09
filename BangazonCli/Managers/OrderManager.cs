@@ -17,7 +17,7 @@ namespace BangazonCli
 
                 foreach(Order o in Orders)
                 {
-                    if (o.OrderId == orderId)
+                    if (o.Id == orderId)
                     {
                         o.PaymentId = paymentTypeId;
                     }
