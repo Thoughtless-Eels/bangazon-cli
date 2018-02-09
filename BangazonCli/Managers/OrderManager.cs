@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 
 namespace BangazonCli
 {
@@ -12,13 +14,24 @@ namespace BangazonCli
             Orders.Add(order);
         }
 
+        public Order GetSingleOrder (int orderId) 
+        {
+            return Orders.Where(o => o.Id == orderId).Single();
+        }
+
         public void CompleteOrder(int orderId, int paymentTypeId)
         {
 
                 foreach(Order o in Orders)
                 {
-                    if (o.OrderId == orderId)
+                    if (o.Id == orderId)
                     {
+                        // Type type = o.GetType();
+
+                        // PropertyInfo prop = type.GetProperty("PaymentId");
+
+                        // prop.SetValue (type, prop, paymentTypeId);
+                        
                         o.PaymentId = paymentTypeId;
                     }
                 }
