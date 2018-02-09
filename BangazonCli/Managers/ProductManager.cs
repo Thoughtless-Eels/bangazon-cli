@@ -3,11 +3,18 @@ using System.Linq;
 
 namespace BangazonCli {
     public class ProductManager {
-        private List<Product> _productTable = new List<Product> ();
+        public List<Product> _productTable = new List<Product> ();
 
         public void Add (Product product) {
             _productTable.Add (product);
         }
+
+        // public Product CreateProduct (int id, int customerid, double price, string name, string description, int quantity, int quantitysold, DateTime createdon) {
+
+        //         Product _product = new Product ();
+        //         return _product;
+        // }
+
 
         public List<Product> GetAllProducts () {
             return _productTable;
@@ -27,6 +34,9 @@ namespace BangazonCli {
 
         public void UpdateSingleProduct (Product product) {
             product.Id = 1;
+        }
+        public void AddProductToCustomer (Product product, Customer customer) {
+            product.CustomerId = customer.Id;
         }
     }
 }

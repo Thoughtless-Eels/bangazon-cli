@@ -9,7 +9,7 @@ namespace BangazonCli.Test {
         private Customer _customer;
         private DateTime dt = DateTime.Now;
 
-        public void productConstructor () {
+        public ProductManager_Should () {
             _product = new Product (
                 1,
                 4,
@@ -20,11 +20,24 @@ namespace BangazonCli.Test {
                 72,
                 dt
             );
+            _customer = new Customer (
+                1,
+                "Chaz",
+                "Vanderbilt",
+                "Brentwood",
+                "TN",
+                "37027",
+                "615-555-1234",
+                DateTime.Now,
+                DateTime.Now
+            );
         }
 
         [Fact]
-        public void CreateProduct () {
-            // Assert.Contains (_product.Name, "Book");
+        public void AddProduct () {
+            ProductManager productmanager = new ProductManager ();
+            productmanager.Add (_product);
+            Assert.Contains (_product, productmanager._productTable);
         }
 
         [Fact]
@@ -46,36 +59,15 @@ namespace BangazonCli.Test {
             Assert.DoesNotContain (_product, listProduct);
         }
 
-        // [Fact]
-        // public void UpdateProduct () {
-        //     ProductManager productmanager = new ProductManager ();
-        //     productmanager.Add (_product);
-        //     List<Product> listProduct = productmanager.GetAllProducts ();
-
-        //     productmanager.UpdateSingleProduct (_product);
-
-        //     Assert.Equal (_product.Id, 1);
-        // }
-
-
-            // Pull the instance of _product and _customer together
-
-            // Add the Customer.Id Key to the product. - .Add
-
-            // Assert that the table contains CustomerId on product - Assert.
-//             // Assert.Contains (_product.CustomerId, 4);
-//    [Fact]
-//         public void AddProductToCustomer()
-//         {
-//             ProductManager productmanager = new ProductManager();
-//             manager.ProductManager(_product);
-
-//             Assert.Contains(_product, manager._productManagerTable);
-//         }
-
         [Fact]
-        public void AddProductToOrder () {
+        public void UpdateProduct () {
+            ProductManager productmanager = new ProductManager ();
+            productmanager.Add (_product);
+            List<Product> listProduct = productmanager.GetAllProducts ();
 
+            productmanager.UpdateSingleProduct (_product);
+
+            Assert.Equal (1, _product.Id);
         }
     }
 }
