@@ -15,6 +15,50 @@ namespace BangazonCli
             _connection = new SqliteConnection(_connectionString);
         }
 
+        public int Insert(string command)
+        {
+            int insertedItemId = 0;
+
+            using (_connection)
+            {
+                _connection.Open ();
+                SqliteCommand dbcmd = _connection.CreateCommand ();
+                dbcmd.CommandText = command;
+
+                dbcmd.ExecuteNonQuery ();
+
+                this.Query("select last_insert_rowid()",
+                    (SqliteDataReader reader) => {
+                        while (reader.Read ())
+                        {
+                            insertedItemId = reader.GetInt32(0);
+                        }
+                    }
+                );
+
+                dbcmd.Dispose ();
+            }
+
+            return insertedItemId;
+        }
+
+        public void Query(string command, Action<SqliteDataReader> handler)
+        {
+            using (_connection)
+            {
+                _connection.Open ();
+                SqliteCommand dbcmd = _connection.CreateCommand ();
+                dbcmd.CommandText = command;
+
+                using (SqliteDataReader dataReader = dbcmd.ExecuteReader())
+                {
+                    handler (dataReader);
+                }
+
+                dbcmd.Dispose ();
+            }
+        }
+
 
         public void CheckCustomerTable ()
         {
@@ -70,7 +114,7 @@ namespace BangazonCli
                 SqliteCommand dbcmd = _connection.CreateCommand ();
 
                 // Query the account table to see if table is created
-                dbcmd.CommandText = $"SELECT `OrderId` FROM `Order`";
+                dbcmd.CommandText = $"SELECT `OrderId` FROM `CustomerOrder`";
 
                 try
                 {
@@ -83,11 +127,10 @@ namespace BangazonCli
                     Console.WriteLine(ex.Message);
                     if (ex.Message.Contains("no such table"))
                     {
-                        dbcmd.CommandText = $@"CREATE TABLE `Order` (
-                            `OrderId` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+                        dbcmd.CommandText = $@"CREATE TABLE `CustomerOrder` (
+                            `Id` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
                             `PaymentId` TEXT NOT NULL,
                             `CustomerId` TEXT NOT NULL,
-                            `CompletedOn` TEXT NOT NULL,
                             `StartedOn` TEXT NOT NULL                                                                                                            
                         )";
 
