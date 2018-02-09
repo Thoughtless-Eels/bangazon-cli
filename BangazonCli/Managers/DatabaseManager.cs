@@ -82,7 +82,7 @@ namespace BangazonCli
                     if (ex.Message.Contains("no such table"))
                     {
                         dbcmd.CommandText = $@"CREATE TABLE `Customer` (
-                            `CustomerId` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+                            `Id` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
                             `FirstName` TEXT NOT NULL,
                             `LastName` TEXT NOT NULL,
                             `City` TEXT NOT NULL,
@@ -169,7 +169,7 @@ namespace BangazonCli
                     if (ex.Message.Contains("no such table"))
                     {
                         dbcmd.CommandText = $@"CREATE TABLE `Product` (
-                            `ProductId` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+                            `Id` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
                             `CustomerId` TEXT NOT NULL,
                             `Price` TEXT NOT NULL,
                             `Name` TEXT NOT NULL,
@@ -214,7 +214,7 @@ namespace BangazonCli
                     if (ex.Message.Contains("no such table"))
                     {
                         dbcmd.CommandText = $@"CREATE TABLE `Customer` (
-                            `ProductOrderJoinId` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+                            `Id` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
                             `ProductId` TEXT NOT NULL,
                             `OrderId` TEXT NOT NULL,
                         )";
@@ -254,7 +254,7 @@ namespace BangazonCli
                     if (ex.Message.Contains("no such table"))
                     {
                         dbcmd.CommandText = $@"CREATE TABLE `PaymentType` (
-                            `PaymentTypeId` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+                            `Id` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
                             `CustomerId` TEXT NOT NULL,
                             `AccountNumber` TEXT NOT NULL,
                             `Name` TEXT NOT NULL,
