@@ -50,12 +50,6 @@ namespace BangazonCli.Test
         public void CreateNewOrder()
         {
 
-            _paymentType = new PaymentType(
-            1,
-            "12",
-            "Visa",
-            1
-            );
             CustomerManager customerManager = new CustomerManager();
             OrderManager orderManager = new OrderManager();
             customerManager.Add(_customer);
@@ -77,6 +71,12 @@ namespace BangazonCli.Test
         [Fact]
         public void CompleteOrder()
         {
+            _paymentType = new PaymentType(
+            1,
+            "12",
+            "Visa",
+            1
+            );
 
             CustomerManager customerManager = new CustomerManager();
             OrderManager orderManager = new OrderManager();
@@ -88,10 +88,10 @@ namespace BangazonCli.Test
            0,
            _dt
            );
-
-            orderManager.CompleteOrder(_order.OrderId, _paymentType.PaymentTypeId);
-
-            Assert.Equal(1, _order.PaymentId);
+            orderManager.StoreOrder(_order);
+            orderManager.CompleteOrder(_order.Id, _paymentType.Id);
+            Order updatedOrder = orderManager.GetSingleOrder(1);
+            Assert.Equal(1, updatedOrder.PaymentId);
         }
     }
 }

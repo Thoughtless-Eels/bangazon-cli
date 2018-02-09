@@ -10,23 +10,25 @@ namespace BangazonCli.Test
         private Order _order;
         private DateTime _dt = DateTime.Now;
 
-        public Order_Should () {
-            _order = new Order (
+        public Order_Should()
+        {
+            _order = new Order(
                 1,
                 1,
                 0,
                 _dt
             );
         }
-        
+
         [Fact]
-        public void createOrderObj () {
-            
-            Assert.Equal(1, _order.OrderId);
+        public void createOrderObj()
+        {
+
+            Assert.Equal(1, _order.Id);
             Assert.Equal(1, _order.CustomerId);
             Assert.Equal(0, _order.PaymentId);
             Assert.Equal(_dt, _order.StartedOn);
-    
+
         }
     }
 }
