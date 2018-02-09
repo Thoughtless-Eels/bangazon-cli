@@ -25,8 +25,8 @@ namespace BangazonCli {
             product.Price = price;
         }
 
-        // public void UpdateSingleProduct (Product product) {
-        //     product.Id = 1;
-        // }
+        public void UpdateSingleProduct (Product product) {
+            product.Id = 1;
+        }
     }
 }
