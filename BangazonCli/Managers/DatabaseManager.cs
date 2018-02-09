@@ -11,7 +11,6 @@ namespace BangazonCli
 
         public DatabaseManager(string dbLocation)
         {
-            // Replace {you} with the correct value
             _connectionString = $"Data Source={System.Environment.GetEnvironmentVariable(dbLocation)}";
             _connection = new SqliteConnection(_connectionString);
         }
