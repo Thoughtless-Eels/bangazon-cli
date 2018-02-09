@@ -32,14 +32,14 @@ namespace BangazonCli.Test {
                 dt
             );
 
-            Assert.Equal (_product.Id, 1);
-            Assert.Equal (_product.CustomerId, 4);
-            Assert.Equal (_product.Price, 12.55);
-            Assert.Equal (_product.Name, "Book");
-            Assert.Equal (_product.Description, "A Handcrafted book about See Sherp");
-            Assert.Equal (_product.Quantity, 2);
-            Assert.Equal (_product.QuantitySold, 72);
-            Assert.Equal (_product.CreatedOn, dt);
+            Assert.Equal (1, _product.Id);
+            Assert.Equal (4, _product.CustomerId);
+            Assert.Equal (12.55, _product.Price);
+            Assert.Equal ("Book", _product.Name);
+            Assert.Equal ("A Handcrafted book about See Sherp", _product.Description);
+            Assert.Equal (2, _product.Quantity);
+            Assert.Equal (72, _product.QuantitySold);
+            Assert.Equal (dt, _product.CreatedOn);
 
         }
 

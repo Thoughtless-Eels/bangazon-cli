@@ -6,26 +6,68 @@ using Xunit;
 namespace BangazonCli.Test {
     public class ProductManager_Should {
         private Product _product;
+        private Customer _customer;
         private DateTime dt = DateTime.Now;
-   
-        [Fact]
-        public void CreateProduct () {
-            // Assert.Contains (_product.Name, "Book");
+
+        public ProductManager_Should () {
+            _product = new Product (
+                1,
+                4,
+                12.55,
+                "Book",
+                "A Handcrafted book about See Sherp",
+                2,
+                72,
+                dt
+            );
+            _customer = new Customer (
+                1,
+                "Chaz",
+                "Vanderbilt",
+                "Brentwood",
+                "TN",
+                "37027",
+                "615-555-1234",
+                DateTime.Now,
+                DateTime.Now
+            );
         }
 
         [Fact]
-        public void AddProductToCustomer () {
-            // Need to pull the instance of _product and _customer together
-
-            // Assert that the table contains CustomerId on product
-            
-
-
+        public void AddProduct () {
+            ProductManager productmanager = new ProductManager ();
+            productmanager.Add (_product);
+            Assert.Contains (_product, productmanager._productTable);
         }
 
         [Fact]
-        public void AddProductToOrder () {
+        public void ListAllProducts () {
+            ProductManager productmanager = new ProductManager ();
+            productmanager.Add (_product);
+            List<Product> listProduct = productmanager.GetAllProducts ();
+            Assert.Contains (_product, listProduct);
+        }
 
+        [Fact]
+        public void RemoveProduct () {
+            ProductManager productmanager = new ProductManager ();
+            productmanager.Add (_product);
+            List<Product> listProduct = productmanager.GetAllProducts ();
+
+            productmanager.RemoveSingleProduct (_product);
+
+            Assert.DoesNotContain (_product, listProduct);
+        }
+
+        [Fact]
+        public void UpdateProduct () {
+            ProductManager productmanager = new ProductManager ();
+            productmanager.Add (_product);
+            List<Product> listProduct = productmanager.GetAllProducts ();
+
+            productmanager.UpdateSingleProduct (_product);
+
+            Assert.Equal (1, _product.Id);
         }
     }
 }
