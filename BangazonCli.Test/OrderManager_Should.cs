@@ -12,6 +12,8 @@ namespace BangazonCli.Test
         private PaymentType _paymentType;
         private Customer _customer;
         private Product _product;
+        private DatabaseManager _dbManager;
+        _dbManager = new DatabaseManager("BangazonTestDB");
 
         private DateTime _dt = DateTime.Now;
 
@@ -28,21 +30,18 @@ namespace BangazonCli.Test
            "615-555-1234",
            _dt,
            _dt
-       );
+             );
 
             _product = new Product(
-                1,
-                4,
-                12.55,
-                "Book",
-                "A Handcrafted book about See Sherp",
-                2,
-                72,
-                _dt
+            1,
+            4,
+            12.55,
+            "Book",
+            "A Handcrafted book about See Sherp",
+            2,
+            72,
+            _dt
             );
-
-
-
         }
 
         [Fact]
