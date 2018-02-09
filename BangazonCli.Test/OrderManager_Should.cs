@@ -41,18 +41,13 @@ namespace BangazonCli.Test {
         }
 
         [Fact]
-        public void CreateNewOrder () {
+        public void CreateNewOrder()
+        {
 
-            _paymentType = new PaymentType (
-                1,
-                "12",
-                "Visa",
-                1
-            );
-            CustomerManager customerManager = new CustomerManager ();
-            OrderManager orderManager = new OrderManager ();
-            customerManager.Add (_customer);
-            customerManager.ActivateCustomer (_customer.Id);
+            CustomerManager customerManager = new CustomerManager();
+            OrderManager orderManager = new OrderManager();
+            customerManager.Add(_customer);
+            customerManager.ActivateCustomer(_customer.Id);
 
             _order = new Order (
                 1,
@@ -68,22 +63,29 @@ namespace BangazonCli.Test {
         }
 
         [Fact]
-        public void CompleteOrder () {
-
-            CustomerManager customerManager = new CustomerManager ();
-            OrderManager orderManager = new OrderManager ();
-            customerManager.Add (_customer);
-            customerManager.ActivateCustomer (_customer.Id);
-            _order = new Order (
-                1,
-                customerManager.ActiveCustomerId,
-                0,
-                _dt
+        public void CompleteOrder()
+        {
+            _paymentType = new PaymentType(
+            1,
+            "12",
+            "Visa",
+            1
             );
 
-            orderManager.CompleteOrder (_order.Id, _paymentType.Id);
-
-            Assert.Equal (1, _order.PaymentId);
+            CustomerManager customerManager = new CustomerManager();
+            OrderManager orderManager = new OrderManager();
+            customerManager.Add(_customer);
+            customerManager.ActivateCustomer(_customer.Id);
+            _order = new Order(
+           1,
+           customerManager.ActiveCustomerId,
+           0,
+           _dt
+           );
+            orderManager.StoreOrder(_order);
+            orderManager.CompleteOrder(_order.Id, _paymentType.Id);
+            Order updatedOrder = orderManager.GetSingleOrder(1);
+            Assert.Equal(1, updatedOrder.PaymentId);
         }
     }
 }
