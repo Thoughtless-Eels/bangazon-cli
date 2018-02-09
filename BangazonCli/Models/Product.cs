@@ -12,15 +12,15 @@ namespace BangazonCli {
         public DateTime CreatedOn { get; set; }
 
         // Constructor for Product accepting parameters
-        public Product (int Id, int CustomerId, double Price, string Name, string Description, int Quantity, int QuantitySold, DateTime CreatedOn) {
-            this.Id = Id;
-            this.CustomerId = CustomerId;
-            this.Price = Price;
-            this.Name = Name;
-            this.Description = Description;
-            this.Quantity = Quantity;
-            this.QuantitySold = QuantitySold;
-            this.CreatedOn = CreatedOn;
+        public Product (int id, int customerId, double price, string name, string description, int quantity, int quantitySold, DateTime createdOn) {
+            this.Id = id;
+            this.CustomerId = customerId;
+            this.Price = price;
+            this.Name = name;
+            this.Description = description;
+            this.Quantity = quantity;
+            this.QuantitySold = quantitySold;
+            this.CreatedOn = createdOn;
         }
     }
 }
