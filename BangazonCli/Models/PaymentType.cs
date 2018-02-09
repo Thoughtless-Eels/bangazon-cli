@@ -15,7 +15,6 @@ namespace BangazonCli
 
         // Foreign Key: 
         public int CustomerId { get; set; }
-        public Customer Customer { get; set; }
 
 // Steves Code: Is this needed?
         // public Job ()
