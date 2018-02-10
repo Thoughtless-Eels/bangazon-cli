@@ -23,7 +23,7 @@ namespace BangazonCli.Test {
             */
             _product = new Product (
                 1,
-                4,
+                1,
                 12.55,
                 "Book",
                 "A Handcrafted book about See Sherp",
@@ -33,7 +33,7 @@ namespace BangazonCli.Test {
             );
 
             Assert.Equal (1, _product.Id);
-            Assert.Equal (4, _product.CustomerId);
+            Assert.Equal (1, _product.CustomerId);
             Assert.Equal (12.55, _product.Price);
             Assert.Equal ("Book", _product.Name);
             Assert.Equal ("A Handcrafted book about See Sherp", _product.Description);

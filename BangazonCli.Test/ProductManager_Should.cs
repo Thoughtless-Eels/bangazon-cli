@@ -12,7 +12,7 @@ namespace BangazonCli.Test {
         public ProductManager_Should () {
             _product = new Product (
                 1,
-                4,
+                1,
                 12.55,
                 "Book",
                 "A Handcrafted book about See Sherp",
@@ -35,14 +35,14 @@ namespace BangazonCli.Test {
 
         [Fact]
         public void AddProduct () {
-            ProductManager productmanager = new ProductManager ();
-            productmanager.Add (_product);
-            Assert.Contains (_product, productmanager._productTable);
+            ProductManager productmanager = new ProductManager ("BangazonTestDB");
+            Product newProduct = productmanager.Add (_product);
+            Assert.Equal ("Book", newProduct.Name);
         }
 
         [Fact]
         public void ListAllProducts () {
-            ProductManager productmanager = new ProductManager ();
+            ProductManager productmanager = new ProductManager ("BangazonTestDB");
             productmanager.Add (_product);
             List<Product> listProduct = productmanager.GetAllProducts ();
             Assert.Contains (_product, listProduct);
@@ -50,7 +50,7 @@ namespace BangazonCli.Test {
 
         [Fact]
         public void RemoveProduct () {
-            ProductManager productmanager = new ProductManager ();
+            ProductManager productmanager = new ProductManager ("BangazonTestDB");
             productmanager.Add (_product);
             List<Product> listProduct = productmanager.GetAllProducts ();
 
@@ -61,7 +61,7 @@ namespace BangazonCli.Test {
 
         [Fact]
         public void UpdateProduct () {
-            ProductManager productmanager = new ProductManager ();
+            ProductManager productmanager = new ProductManager ("BangazonTestDB");
             productmanager.Add (_product);
             List<Product> listProduct = productmanager.GetAllProducts ();
 
