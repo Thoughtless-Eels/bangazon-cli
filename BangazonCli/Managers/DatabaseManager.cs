@@ -92,6 +92,7 @@ namespace BangazonCli
                     `Id` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
                     `FirstName` TEXT NOT NULL,
                     `LastName` TEXT NOT NULL,
+                    `Address`TEXT NOT NULL,
                     `City` TEXT NOT NULL,
                     `State` TEXT NOT NULL,
                     `PostalCode` TEXT NOT NULL,

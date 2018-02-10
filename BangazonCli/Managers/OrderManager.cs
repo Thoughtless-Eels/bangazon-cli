@@ -22,7 +22,7 @@ namespace BangazonCli
             Order emptyOrder = new Order(); 
             string sql = $"INSERT into CustomerOrder (Id, PaymentId, CustomerId, StartedOn) VALUES (null, null, '{order.CustomerId}', '{order.StartedOn}')";
             int lastInsertId = dbManager.Insert(sql);
-            string sqlSelect = $"SELECT * FROM CurrentOrder WHERE order.Id={lastInsertId}";
+            string sqlSelect = $"SELECT * FROM CustomerOrder WHERE CustomerOrder.Id={lastInsertId}";
             dbManager.Query(sqlSelect, (SqliteDataReader reader) =>
             {
                 while (reader.Read())

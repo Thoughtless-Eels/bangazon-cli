@@ -31,7 +31,7 @@ namespace BangazonCli
         {
             Customer emptyCust = new Customer();
             dbManager.CheckTables();
-            string custSql = $"INSERT into Customer (Id, FirstName, LastName, City, State, PostalCode, PhoneNumber, CreatedOn, LastLogin) VALUES (null, '{freshCust.FirstName}', '{freshCust.LastName}', '{freshCust.City}', '{freshCust.State}', '{freshCust.PostalCode}', '{freshCust.PhoneNumber}', '{freshCust.CreatedOn}', '{freshCust.LastLogin}')";
+            string custSql = $"INSERT into Customer (Id, FirstName, LastName, Address, City, State, PostalCode, PhoneNumber, CreatedOn, LastLogin) VALUES (null, '{freshCust.FirstName}', '{freshCust.LastName}','{freshCust.Address}', '{freshCust.City}', '{freshCust.State}', '{freshCust.PostalCode}', '{freshCust.PhoneNumber}', '{freshCust.CreatedOn}', '{freshCust.LastLogin}')";
             int lastInsertId = dbManager.Insert(custSql);
             string sqlSelect = $"SELECT * FROM Customer WHERE Customer.Id={lastInsertId}";
             dbManager.Query(sqlSelect, (SqliteDataReader reader) =>
