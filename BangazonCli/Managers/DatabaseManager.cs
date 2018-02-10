@@ -59,219 +59,128 @@ namespace BangazonCli
             }
         }
 
-
-        public void CheckCustomerTable ()
+        public void CheckCustomerOrderTable () 
         {
             using (_connection)
             {
                 _connection.Open();
                 SqliteCommand dbcmd = _connection.CreateCommand ();
 
-                // Query the account table to see if table is created
-                dbcmd.CommandText = $"SELECT `CustomerId` FROM `Customer`";
+                dbcmd.CommandText = @"CREATE TABLE IF NOT EXISTS
+                `CustomerOrder` (
+                    `Id` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+                    `PaymentId` INTEGER,
+                    `CustomerId` INTEGER NOT NULL,
+                    `StartedOn` TEXT NOT NULL,
+                    FOREIGN KEY(`PaymentId`) REFERENCES `PaymentType`(`Id`),
+                    FOREIGN KEY(`CustomerId`) REFERENCES `Customer`(`Id`))";
 
-                try
-                {
-                    // Try to run the query. If it throws an exception, create the table
-                    using (SqliteDataReader reader = dbcmd.ExecuteReader()) { }
-                    dbcmd.Dispose ();
-                }
-                catch (Microsoft.Data.Sqlite.SqliteException ex)
-                {
-                    Console.WriteLine(ex.Message);
-                    if (ex.Message.Contains("no such table"))
-                    {
-                        dbcmd.CommandText = $@"CREATE TABLE `Customer` (
-                            `Id` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-                            `FirstName` TEXT NOT NULL,
-                            `LastName` TEXT NOT NULL,
-                            `City` TEXT NOT NULL,
-                            `State` TEXT NOT NULL,
-                            `Postal Code` TEXT NOT NULL,
-                            `PhoneNumber` TEXT NOT NULL,
-                            `CreatedOn` TEXT NOT NULL,
-                            `DaysInactive` TEXT NOT NULL                                                                                                                
-                        )";
-
-                        try
-                        {
-                            dbcmd.ExecuteNonQuery ();
-                        }
-                        catch (Microsoft.Data.Sqlite.SqliteException crex)
-                        {
-                            Console.WriteLine("Table already exists. Ignoring");
-                        }
-                    }
-                }
+                dbcmd.ExecuteNonQuery();
+                dbcmd.Dispose();
                 _connection.Close();
             }
         }
-        public void CheckOrderTable ()
+
+        public void CheckCustomerTable () 
         {
             using (_connection)
             {
                 _connection.Open();
                 SqliteCommand dbcmd = _connection.CreateCommand ();
 
-                // Query the account table to see if table is created
-                dbcmd.CommandText = $"SELECT `OrderId` FROM `CustomerOrder`";
+                dbcmd.CommandText = @"CREATE TABLE IF NOT EXISTS
+                `Customer` (
+                    `Id` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+                    `FirstName` TEXT NOT NULL,
+                    `LastName` TEXT NOT NULL,
+                    `City` TEXT NOT NULL,
+                    `State` TEXT NOT NULL,
+                    `Postal Code` TEXT NOT NULL,
+                    `PhoneNumber` TEXT NOT NULL,
+                    `CreatedOn` TEXT NOT NULL,
+                    `DaysInactive` TEXT NOT NULL 
+                    )";
 
-                try
-                {
-                    // Try to run the query. If it throws an exception, create the table
-                    using (SqliteDataReader reader = dbcmd.ExecuteReader()) { }
-                    dbcmd.Dispose ();
-                }
-                catch (Microsoft.Data.Sqlite.SqliteException ex)
-                {
-                    Console.WriteLine(ex.Message);
-                    if (ex.Message.Contains("no such table"))
-                    {
-                        dbcmd.CommandText = $@"CREATE TABLE `CustomerOrder` (
-                            `Id` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-                            `PaymentId` TEXT NOT NULL,
-                            `CustomerId` TEXT NOT NULL,
-                            `StartedOn` TEXT NOT NULL                                                                                                            
-                        )";
-
-                        try
-                        {
-                            dbcmd.ExecuteNonQuery ();
-                        }
-                        catch (Microsoft.Data.Sqlite.SqliteException crex)
-                        {
-                            Console.WriteLine("Table already exists. Ignoring");
-                        }
-                    }
-                }
+                dbcmd.ExecuteNonQuery();
+                dbcmd.Dispose();
                 _connection.Close();
             }
         }
-        public void CheckProductTable ()
+
+        public void CheckProductTable () 
         {
             using (_connection)
             {
                 _connection.Open();
                 SqliteCommand dbcmd = _connection.CreateCommand ();
 
-                // Query the account table to see if table is created
-                dbcmd.CommandText = $"SELECT `ProductId` FROM `Product`";
+                dbcmd.CommandText = @"CREATE TABLE IF NOT EXISTS
+                `Product` (
+                `Id` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+                `CustomerId` INTEGER NOT NULL,
+                `Price` INTEGER NOT NULL,
+                `Name` TEXT NOT NULL,
+                `Description` TEXT NOT NULL,
+                `Quantity` INTEGER NOT NULL,
+                `QuantitySold` INTEGER,
+                `CreatedOn` TEXT NOT NULL,
+                FOREIGN KEY(`CustomerId`) REFERENCES `Customer`(`Id`)
+                )";
 
-                try
-                {
-                    // Try to run the query. If it throws an exception, create the table
-                    using (SqliteDataReader reader = dbcmd.ExecuteReader()) { }
-                    dbcmd.Dispose ();
-                }
-                catch (Microsoft.Data.Sqlite.SqliteException ex)
-                {
-                    Console.WriteLine(ex.Message);
-                    if (ex.Message.Contains("no such table"))
-                    {
-                        dbcmd.CommandText = $@"CREATE TABLE `Product` (
-                            `Id` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-                            `CustomerId` TEXT NOT NULL,
-                            `Price` TEXT NOT NULL,
-                            `Name` TEXT NOT NULL,
-                            `Description` TEXT NOT NULL,
-                            `Quantity` TEXT NOT NULL,
-                            `AmtSold` TEXT NOT NULL,
-                            `CreatedOn` TEXT NOT NULL
-                        )";
-
-                        try
-                        {
-                            dbcmd.ExecuteNonQuery ();
-                        }
-                        catch (Microsoft.Data.Sqlite.SqliteException crex)
-                        {
-                            Console.WriteLine("Table already exists. Ignoring");
-                        }
-                    }
-                }
+                dbcmd.ExecuteNonQuery();
+                dbcmd.Dispose();
                 _connection.Close();
             }
         }
-        public void CheckProductOrderJoinTable ()
+
+        public void CheckPaymentTypeTable () 
         {
             using (_connection)
             {
                 _connection.Open();
                 SqliteCommand dbcmd = _connection.CreateCommand ();
 
-                // Query the account table to see if table is created
-                dbcmd.CommandText = $"SELECT `ProductOrderJoinId` FROM `ProductOrderJoin`";
+                dbcmd.CommandText = @"CREATE TABLE IF NOT EXISTS
+                `PaymentType` (
+                    `Id` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+                    `CustomerId` TEXT NOT NULL,
+                    `AccountNumber` TEXT NOT NULL,
+                    `Name` TEXT NOT NULL
+                    )";
 
-                try
-                {
-                    // Try to run the query. If it throws an exception, create the table
-                    using (SqliteDataReader reader = dbcmd.ExecuteReader()) { }
-                    dbcmd.Dispose ();
-                }
-                catch (Microsoft.Data.Sqlite.SqliteException ex)
-                {
-                    Console.WriteLine(ex.Message);
-                    if (ex.Message.Contains("no such table"))
-                    {
-                        dbcmd.CommandText = $@"CREATE TABLE `Customer` (
-                            `Id` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-                            `ProductId` TEXT NOT NULL,
-                            `OrderId` TEXT NOT NULL,
-                        )";
-
-                        try
-                        {
-                            dbcmd.ExecuteNonQuery ();
-                        }
-                        catch (Microsoft.Data.Sqlite.SqliteException crex)
-                        {
-                            Console.WriteLine("Table already exists. Ignoring");
-                        }
-                    }
-                }
+                dbcmd.ExecuteNonQuery();
+                dbcmd.Dispose();
                 _connection.Close();
             }
         }
-        public void CheckPaymentTypeTable ()
+
+        public void CheckProductOrderJoinTable () 
         {
             using (_connection)
             {
                 _connection.Open();
                 SqliteCommand dbcmd = _connection.CreateCommand ();
 
-                // Query the account table to see if table is created
-                dbcmd.CommandText = $"SELECT `PaymentTypeId` FROM `PaymentType`";
+                dbcmd.CommandText = @"CREATE TABLE IF NOT EXISTS
+                `ProductOrderJoin` (
+                    `Id` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+                    `ProductId` TEXT NOT NULL,
+                    `OrderId` TEXT NOT NULL
+                    )";
 
-                try
-                {
-                    // Try to run the query. If it throws an exception, create the table
-                    using (SqliteDataReader reader = dbcmd.ExecuteReader()) { }
-                    dbcmd.Dispose ();
-                }
-                catch (Microsoft.Data.Sqlite.SqliteException ex)
-                {
-                    Console.WriteLine(ex.Message);
-                    if (ex.Message.Contains("no such table"))
-                    {
-                        dbcmd.CommandText = $@"CREATE TABLE `PaymentType` (
-                            `Id` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-                            `CustomerId` TEXT NOT NULL,
-                            `AccountNumber` TEXT NOT NULL,
-                            `Name` TEXT NOT NULL,
-                        )";
-
-                        try
-                        {
-                            dbcmd.ExecuteNonQuery ();
-                        }
-                        catch (Microsoft.Data.Sqlite.SqliteException crex)
-                        {
-                            Console.WriteLine("Table already exists. Ignoring");
-                        }
-                    }
-                }
+                dbcmd.ExecuteNonQuery();
+                dbcmd.Dispose();
                 _connection.Close();
             }
-        }   
+        }
+
+        public void CheckTables()
+        {
+            this.CheckCustomerTable();
+            this.CheckProductTable();
+            this.CheckPaymentTypeTable();
+            this.CheckProductOrderJoinTable();
+            this.CheckCustomerOrderTable();
+        }
     }
 }

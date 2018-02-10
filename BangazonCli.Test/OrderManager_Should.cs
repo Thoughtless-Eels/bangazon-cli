@@ -45,7 +45,7 @@ namespace BangazonCli.Test {
             CustomerManager customerManager = new CustomerManager ();
             OrderManager orderManager = new OrderManager ("BangazonTestDB");
             customerManager.Add (_customer);
-            customerManager.ActivateCustomer (_customer.Id);
+            customerManager.ActivateCustomer (_customer.Id);    
 
             _order = new Order (
                 1,
@@ -53,7 +53,7 @@ namespace BangazonCli.Test {
                 0,
                 _dt
             );
-
+            
             Order updatedOrder = orderManager.StoreOrder (_order);
 
             Assert.Equal (customerManager.ActiveCustomerId, updatedOrder.CustomerId);
@@ -70,7 +70,7 @@ namespace BangazonCli.Test {
             );
 
             CustomerManager customerManager = new CustomerManager ();
-            OrderManager orderManager = new OrderManager ();
+            OrderManager orderManager = new OrderManager ("BangazonTestDB");
             customerManager.Add (_customer);
             customerManager.ActivateCustomer (_customer.Id);
             _order = new Order (
