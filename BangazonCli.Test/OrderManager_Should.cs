@@ -42,7 +42,7 @@ namespace BangazonCli.Test {
         [Fact]
         public void CreateNewOrder () {
 
-            CustomerManager customerManager = new CustomerManager ();
+            CustomerManager customerManager = new CustomerManager ("BangazonTestDB");
             OrderManager orderManager = new OrderManager ("BangazonTestDB");
             customerManager.Add (_customer);
             customerManager.ActivateCustomer (_customer.Id);    
@@ -69,7 +69,7 @@ namespace BangazonCli.Test {
                 1
             );
 
-            CustomerManager customerManager = new CustomerManager ();
+            CustomerManager customerManager = new CustomerManager ("BangazonTestDB");
             OrderManager orderManager = new OrderManager ("BangazonTestDB");
             customerManager.Add (_customer);
             customerManager.ActivateCustomer (_customer.Id);

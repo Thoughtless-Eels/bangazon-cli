@@ -26,10 +26,10 @@ namespace BangazonCli.Test
         [Fact]
         public void Add_Should()
         {
-            CustomerManager manager = new CustomerManager();
-            manager.Add(_customer);
+            CustomerManager manager = new CustomerManager("BangazonTestDB");
+            Customer newCustomer = manager.Add(_customer);
 
-            Assert.Contains(_customer, manager._customerTable);
+            Assert.Equal("Chaz", newCustomer.FirstName);
         }
 
 
@@ -37,7 +37,7 @@ namespace BangazonCli.Test
         public void GetAllCustomers_Should()
         {
             
-            CustomerManager manager = new CustomerManager();
+            CustomerManager manager = new CustomerManager("BangazonTestDB");
 
             manager.Add(_customer);
             List<Customer> customerList = manager.GetAllCustomers(); 
@@ -47,7 +47,7 @@ namespace BangazonCli.Test
         [Fact]
         public void GetSingleCustomer_Should()
         {
-            CustomerManager manager = new CustomerManager();
+            CustomerManager manager = new CustomerManager("BangazonTestDB");
             manager.Add(_customer);
             Customer theCustomer = manager.GetSingleCustomer(1);
 
@@ -62,7 +62,7 @@ namespace BangazonCli.Test
         [Fact]
         public void ActivateCustomer_Should()
         {
-            CustomerManager manager = new CustomerManager();
+            CustomerManager manager = new CustomerManager("BangazonTestDB");
             manager.Add(_customer);
             manager.ActivateCustomer(1);
 

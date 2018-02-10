@@ -35,10 +35,9 @@ namespace BangazonCli
                         }
                     }
                 );
-
                 dbcmd.Dispose ();
             }
-
+            _connection.Close();
             return insertedItemId;
         }
 
@@ -95,10 +94,10 @@ namespace BangazonCli
                     `LastName` TEXT NOT NULL,
                     `City` TEXT NOT NULL,
                     `State` TEXT NOT NULL,
-                    `Postal Code` TEXT NOT NULL,
+                    `PostalCode` TEXT NOT NULL,
                     `PhoneNumber` TEXT NOT NULL,
                     `CreatedOn` TEXT NOT NULL,
-                    `DaysInactive` TEXT NOT NULL 
+                    `LastLogin` TEXT NOT NULL 
                     )";
 
                 dbcmd.ExecuteNonQuery();

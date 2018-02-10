@@ -19,7 +19,7 @@ namespace BangazonCli {
         public DateTime LastLogin { get; set; }
 
         // Constructor for Customer accepting parameters
-        public Customer (int id, string firstName, string lastName, string city, string state, string postalCode, string phoneNumber,DateTime createdOn, DateTime lastLogin)
+        public Customer (int id, string firstName, string lastName, string city, string state, string postalCode, string phoneNumber, DateTime createdOn, DateTime lastLogin)
         {
             this.Id = id;
             this.FirstName = firstName;
@@ -28,6 +28,21 @@ namespace BangazonCli {
             this.State = state;
             this.PostalCode = postalCode;
             this.PhoneNumber = phoneNumber;
+            this.CreatedOn = CreatedOn;
+            this.LastLogin = lastLogin;
+        }
+
+        public Customer ()
+        {
+            this.Id = 0;
+            this.FirstName = "";
+            this.LastName = "";
+            this.City = "";
+            this.State = "";
+            this.PostalCode = "";
+            this.PhoneNumber = "";
+            this.CreatedOn = DateTime.Now;
+            this.LastLogin = DateTime.Now;
         }
     }
 }
