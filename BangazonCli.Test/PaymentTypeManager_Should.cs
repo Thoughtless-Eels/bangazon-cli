@@ -25,8 +25,7 @@ namespace BangazonCli.Test.bin
         [Fact]
         public void GetAllPaymentType_Should()
         {
-
-            PaymentTypeManager manager = new PaymentTypeManager();
+            PaymentTypeManager manager = new PaymentTypeManager("BangazonTestDB");
 
             manager.AddPaymentType(_paymenttype);
             List<PaymentType> paymentList = manager.GetAllPaymentTypes();
@@ -38,10 +37,10 @@ namespace BangazonCli.Test.bin
         [Fact]
         public void AddPaymentType_Should()
         {
-            PaymentTypeManager manager = new PaymentTypeManager();
-            manager.AddPaymentType(_paymenttype);
+            PaymentTypeManager manager = new PaymentTypeManager("BangazonTestDB");
+            PaymentType newPaymentType = manager.AddPaymentType(_paymenttype);
 
-            Assert.Contains(_paymenttype, manager._paymentTypeTable);
+            Assert.Equal("Visa", newPaymentType.Name);
         }
 
     }
