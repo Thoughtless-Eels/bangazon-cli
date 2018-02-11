@@ -19,6 +19,7 @@ namespace BangazonCli.Test {
                 1,
                 "Chaz",
                 "Vanderbilt",
+                "777 MoneyStacks way",
                 "Brentwood",
                 "TN",
                 "37027",
@@ -49,14 +50,14 @@ namespace BangazonCli.Test {
 
             _order = new Order (
                 1,
-                customerManager.ActiveCustomerId,
+                customerManager.ActiveCustomer.Id,
                 0,
                 _dt
             );
             
             Order updatedOrder = orderManager.StoreOrder (_order);
 
-            Assert.Equal (customerManager.ActiveCustomerId, updatedOrder.CustomerId);
+            Assert.Equal (customerManager.ActiveCustomer.Id, updatedOrder.CustomerId);
 
         }
 
@@ -75,7 +76,7 @@ namespace BangazonCli.Test {
             customerManager.ActivateCustomer (_customer.Id);
             _order = new Order (
                 1,
-                customerManager.ActiveCustomerId,
+                customerManager.ActiveCustomer.Id,
                 0,
                 _dt
             );

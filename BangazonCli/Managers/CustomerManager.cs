@@ -9,23 +9,17 @@ namespace BangazonCli
     {
         public List<Customer> _customerTable = new List<Customer>();
 
-        public int ActiveCustomerId;
+        public Customer ActiveCustomer;
 
         private DatabaseManager dbManager;
+
+
 
         public CustomerManager(string envVar)
         {
             dbManager = new DatabaseManager(envVar);
 
         }
-
-            // this.Id = 0;
-            // this.FirstName = "";
-            // this.LastName = "";
-            // this.City = "";
-            // this.State = "";
-            // this.PostalCode = "";
-            // this.PhoneNumber = "";
 
         public Customer Add(Customer freshCust)
         {
@@ -54,12 +48,40 @@ namespace BangazonCli
         // }
         public void ActivateCustomer(int Id)
         {
-            ActiveCustomerId = Id;
+            List<Customer> customers = this.GetAllCustomers();
+            ActiveCustomer = customers.Where(c => Id == c.Id).Single();
         }
 
         public List<Customer> GetAllCustomers ()
         {
-            return _customerTable;
+
+            List<Customer> allCusts = new List<Customer>();
+
+            string sqlSelect = $"SELECT * FROM Customer";
+            dbManager.Query(sqlSelect, (SqliteDataReader reader) =>
+            {
+                while (reader.Read())
+                {
+                    Customer currentCust = new Customer();
+
+                    currentCust.Id = Convert.ToInt32(reader["Id"]);
+                    currentCust.FirstName = Convert.ToString(reader["FirstName"]);
+                    currentCust.LastName = Convert.ToString(reader["LastName"]);
+                    currentCust.Address = Convert.ToString(reader["Address"]);
+                    currentCust.City = Convert.ToString(reader["City"]);
+                    currentCust.State = Convert.ToString(reader["State"]);
+                    currentCust.PostalCode = Convert.ToString(reader["PostalCode"]);
+                    currentCust.PhoneNumber = Convert.ToString(reader["PhoneNumber"]);
+                    currentCust.CreatedOn = Convert.ToDateTime(reader["CreatedOn"]);
+                    currentCust.LastLogin = Convert.ToDateTime(reader["LastLogin"]);
+                    
+                    allCusts.Add(currentCust);
+                    
+                }
+            });
+
+
+            return allCusts;
         }
 
         public Customer GetSingleCustomer(int id)

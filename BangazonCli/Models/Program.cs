@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using BangazonCli;
 using BangazonCli.Menu;
 
@@ -62,7 +63,15 @@ namespace BangazonCli
                         break;
                     case 2:
                         //choose active customer
-                        
+
+                        List<Customer> customers = customerManager.GetAllCustomers();
+                        Console.WriteLine("Which customer will be active?");
+                        customers.ForEach(c => Console.WriteLine($"{c.Id}. {c.FirstName} {c.LastName}"));
+                        int custToActivate = Convert.ToInt32(Console.ReadLine());
+                        customerManager.ActivateCustomer(custToActivate);
+                        Console.WriteLine($"{customerManager.ActiveCustomer.FirstName} {customerManager.ActiveCustomer.LastName} has been set to active, press any key to continue");
+                        Console.ReadKey();
+
                         break;
                     case 3:
                         //create payment option
