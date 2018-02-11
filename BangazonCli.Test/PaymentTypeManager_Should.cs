@@ -9,6 +9,7 @@ namespace BangazonCli.Test.bin
     public class PaymentTypeManager_Should
     {
         private PaymentType _paymenttype;
+        private Customer _customer;
 
         public PaymentTypeManager_Should()
         {
@@ -19,6 +20,21 @@ namespace BangazonCli.Test.bin
                 "3789122",
                 1
             );
+
+            _customer = new Customer(
+                "Gilly",
+                "Bibbons",
+                "767 Woah ln",
+                "Gallatin",
+                "TN",
+                "37327",
+                "612-455-1234",
+                DateTime.Now,
+                DateTime.Now
+            );
+
+
+
         }
 
         // List Payment Type Manager:
@@ -37,10 +53,21 @@ namespace BangazonCli.Test.bin
         [Fact]
         public void AddPaymentType_Should()
         {
+            CustomerManager custManager = new CustomerManager("BangazonTestDB");
             PaymentTypeManager manager = new PaymentTypeManager("BangazonTestDB");
-            PaymentType newPaymentType = manager.AddPaymentType(_paymenttype);
+            Customer newCust = custManager.Add(_customer);
+            custManager.ActivateCustomer(newCust.Id);
 
-            Assert.Equal("Visa", newPaymentType.Name);
+            PaymentType _paymentType2 = new PaymentType(
+                "AMEX",
+                "172635",
+                custManager.ActiveCustomer.Id
+            );
+
+            PaymentType newPaymentType = manager.AddPaymentType(_paymentType2);
+
+            Assert.Equal("AMEX", newPaymentType.Name);
+            Assert.Equal(custManager.ActiveCustomer.Id, newPaymentType.CustomerId);
         }
 
     }

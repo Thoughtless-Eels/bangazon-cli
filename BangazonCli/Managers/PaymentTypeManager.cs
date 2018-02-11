@@ -38,7 +38,7 @@ namespace BangazonCli
                     emptyPt.Id = Convert.ToInt32(reader["Id"]);
                     emptyPt.AccountNumber = Convert.ToString(reader["AccountNumber"]);
                     emptyPt.Name = Convert.ToString(reader["Name"]);
-                    
+                    emptyPt.CustomerId = Convert.ToInt32(reader["CustomerId"]);
                 }
             });
             return emptyPt;

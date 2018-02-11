@@ -34,6 +34,13 @@ namespace BangazonCli
             this.AccountNumber = accountNumber;
             this.CustomerId = customerId;
         }
+        public PaymentType(string name, string accountNumber, int customerId)
+        {
+            this.Name = name;
+            this.AccountNumber = AccountNumber;
+            this.CustomerId = customerId;
+
+        }
         public PaymentType()
         {
             this.Id = 0;
