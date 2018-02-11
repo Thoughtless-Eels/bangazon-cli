@@ -75,6 +75,14 @@ namespace BangazonCli
                         break;
                     case 3:
                         //create payment option
+                        if (customerManager.ActiveCustomer.Id != 0) 
+                        {
+
+                        } else 
+                        {
+                            Console.WriteLine("Please set a customer to active before creating a payment type, press any key to return to the main menu");
+                            Console.ReadLine();
+                        }
 
                         break;
                     case 4:
@@ -82,23 +90,23 @@ namespace BangazonCli
 
                         break;
                     case 5:
-                        //popular items
+                        //update active customers product
 
                         break;
                     case 6:
-                        //popular items
+                        //add product to shopping to cart
 
                         break;
                     case 7:
-                        //popular items
+                        //complete an order
 
                         break;
                     case 8:
-                        //popular items
+                        //view reports
 
                         break;
                     case 9:
-                        //popular items
+                        //Leave Bangazon
 
                         break;
                 }

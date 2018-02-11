@@ -9,7 +9,7 @@ namespace BangazonCli
     {
         public List<Customer> _customerTable = new List<Customer>();
 
-        public Customer ActiveCustomer;
+        public Customer ActiveCustomer = new Customer();
 
         private DatabaseManager dbManager;
 
