@@ -18,23 +18,22 @@ namespace BangazonCli
 
         public Order StoreOrder(Order order)
         {
-            string sql = $"INSERT into CurrentOrder {order.CustomerId}, {order.StartedOn}";
+            dbManager.CheckTables();
+            Order emptyOrder = new Order(); 
+            string sql = $"INSERT into CustomerOrder (Id, PaymentId, CustomerId, StartedOn) VALUES (null, null, '{order.CustomerId}', '{order.StartedOn}')";
             int lastInsertId = dbManager.Insert(sql);
-            string sqlSelect = $"SELECT * FROM CurrentOrder WHERE order.Id={lastInsertId}";
-            Order lastOrder = dbManager.Query(sqlSelect, (SqliteDataReader reader) =>
+            string sqlSelect = $"SELECT * FROM CustomerOrder WHERE CustomerOrder.Id={lastInsertId}";
+            dbManager.Query(sqlSelect, (SqliteDataReader reader) =>
             {
                 while (reader.Read())
                 {
-                    public Order emptyOrder;
-                    
                     emptyOrder.Id = reader.GetInt32(0);
-                    emptyOrder.CustomerId = reader[2].ToString();
-                    emptyOrder.StartedOn = reader[3].ToString();
-
-
+                    emptyOrder.CustomerId = reader.GetInt32(2);
+                    emptyOrder.StartedOn = reader.GetDateTime(3);
                 }
             });
-            return lastOrder;
+
+            return emptyOrder;
         }
 
         public Order GetSingleOrder (int orderId) 

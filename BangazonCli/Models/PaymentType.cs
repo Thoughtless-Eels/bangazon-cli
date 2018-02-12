@@ -16,7 +16,7 @@ namespace BangazonCli
         // Foreign Key: 
         public int CustomerId { get; set; }
 
-// Steves Code: Is this needed?
+        // Steves Code: Is this needed?
         // public Job ()
         // {
         //     this.Id = 1;
@@ -33,6 +33,20 @@ namespace BangazonCli
             this.Name = name;
             this.AccountNumber = accountNumber;
             this.CustomerId = customerId;
+        }
+        public PaymentType(string name, string accountNumber, int customerId)
+        {
+            this.Name = name;
+            this.AccountNumber = accountNumber;
+            this.CustomerId = customerId;
+
+        }
+        public PaymentType()
+        {
+            this.Id = 0;
+            this.Name = "";
+            this.AccountNumber = "";
+            this.CustomerId = 0;    
         }
     }
 }

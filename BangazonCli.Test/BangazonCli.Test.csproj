@@ -17,4 +17,9 @@
     <ProjectReference Include="..\BangazonCli\BangazonCli.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Data.SQLite" Version="2.0.0" />
+    <PackageReference Include="System.Data.SQLite" Version="1.0.106" />
+  </ItemGroup>
+
 </Project>

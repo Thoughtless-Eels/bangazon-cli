@@ -29,6 +29,7 @@ namespace BangazonCli.Test
                 "Chaz",
                 "Vanderbilt",
                 "Brentwood",
+                "777 MoneyStacks Way",
                 "TN",
                 "37027",
                 "615-555-1234",
