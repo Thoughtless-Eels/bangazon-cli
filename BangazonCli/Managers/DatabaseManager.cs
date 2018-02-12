@@ -104,6 +104,7 @@ namespace BangazonCli
                 dbcmd.ExecuteNonQuery();
                 dbcmd.Dispose();
                 _connection.Close();
+                Console.WriteLine("Created Customer Table!!!");
             }
         }
 

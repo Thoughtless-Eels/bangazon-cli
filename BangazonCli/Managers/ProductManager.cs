@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Data.Sqlite;
 
-namespace BangazonCli {
-    public class ProductManager {
-        public List<Product> _productTable = new List<Product> ();
+namespace BangazonCli
+{
+    public class ProductManager
+    {
+        public List<Product> _productTable = new List<Product>();
         private DatabaseManager dbManager;
 
         public ProductManager(string envVar)
@@ -14,15 +16,16 @@ namespace BangazonCli {
 
         }
 
-            // this.Id = id;
-            // this.CustomerId = customerId;
-            // this.Price = price;
-            // this.Name = name;
-            // this.Description = description;
-            // this.Quantity = quantity;
-            // this.QuantitySold = quantitySold;
-            // this.CreatedOn = createdOn;
-        public Product Add (Product product) {
+        // this.Id = id;
+        // this.CustomerId = customerId;
+        // this.Price = price;
+        // this.Name = name;
+        // this.Description = description;
+        // this.Quantity = quantity;
+        // this.QuantitySold = quantitySold;
+        // this.CreatedOn = createdOn;
+        public Product Add(Product product)
+        {
 
             Product emptyProduct = new Product();
             dbManager.CheckTables();
@@ -37,39 +40,60 @@ namespace BangazonCli {
                     emptyProduct.Id = Convert.ToInt32(reader["Id"]);
                     emptyProduct.Price = Convert.ToInt32(reader["Price"]);
                     emptyProduct.Name = Convert.ToString(reader["Name"]);
-                    
+
                 }
             });
             return emptyProduct;
         }
 
-        // public Product CreateProduct (int id, int customerid, double price, string name, string description, int quantity, int quantitysold, DateTime createdon) {
+        public List<Product> GetAllProducts()
+        {
+            dbManager.CheckTables();
+            List<Product> prodList = new List<Product>();
+            string cmdStr = "SELECT * From Product";
+            dbManager.Query(cmdStr, (SqliteDataReader reader) =>
+            {
+                while (reader.Read())
+                {
+                    Product newProduct = new Product();
 
-        //         Product _product = new Product ();
-        //         return _product;
-        // }
+                    newProduct.Id = Convert.ToInt32(reader["Id"]);
+                    newProduct.Name = Convert.ToString(reader["Name"]);
+                    newProduct.Price = Convert.ToDouble(reader["Price"]);
+                    newProduct.Description = Convert.ToString(reader["Description"]);
+                    newProduct.Quantity = Convert.ToInt32(reader["Quantity"]);
+                    newProduct.QuantitySold = Convert.ToInt32(reader["QuantitySold"]);
+                    newProduct.CreatedOn = Convert.ToDateTime(reader["CreatedOn"]);
+                    newProduct.CustomerId = Convert.ToInt32(reader["CustomerId"]);
 
+                    prodList.Add(newProduct);
 
-        public List<Product> GetAllProducts () {
-            return _productTable;
+                }
+            });
+            return prodList;
         }
 
-        public Product GetSingleProduct (int id) {
-            return _productTable.Where (p => p.Id == id).Single ();
+        public Product GetSingleProduct(int id)
+        {
+            return _productTable.Where(p => p.Id == id).Single();
         }
 
-        public void RemoveSingleProduct (Product product) {
-            _productTable.Remove (product);
+        public void RemoveSingleProduct(Product product)
+        {
+            _productTable.Remove(product);
         }
 
-        public void UpdatePrice (Product product, double price) {
+        public void UpdatePrice(Product product, double price)
+        {
             product.Price = price;
         }
 
-        public void UpdateSingleProduct (Product product) {
+        public void UpdateSingleProduct(Product product)
+        {
             product.Id = 1;
         }
-        public void AddProductToCustomer (Product product, Customer customer) {
+        public void AddProductToCustomer(Product product, Customer customer)
+        {
             product.CustomerId = customer.Id;
         }
     }
