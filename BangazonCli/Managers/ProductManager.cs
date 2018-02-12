@@ -75,7 +75,23 @@ namespace BangazonCli
 
         public Product GetSingleProduct(int id)
         {
-            return _productTable.Where(p => p.Id == id).Single();
+            Product returnedProduct = new Product();
+            string sqlSelect = $"SELECT * FROM Product WHERE Product.Id={id}";
+            dbManager.Query(sqlSelect, (SqliteDataReader reader) =>
+            {
+                while (reader.Read())
+                {
+                    returnedProduct.Id = Convert.ToInt32(reader["Id"]);
+                    returnedProduct.Name = Convert.ToString(reader["Name"]);
+                    returnedProduct.Description = Convert.ToString(reader["Description"]);
+                    returnedProduct.Price = Convert.ToDouble(reader["Price"]);
+                    returnedProduct.Quantity= Convert.ToInt32(reader["Quantity"]);
+                    returnedProduct.QuantitySold = Convert.ToInt32(reader["QuantitySold"]);
+                    returnedProduct.CreatedOn = Convert.ToDateTime(reader["CreatedOn"]);
+                }
+
+            });
+            return returnedProduct;
         }
 
         public void RemoveSingleProduct(Product product)
@@ -83,9 +99,36 @@ namespace BangazonCli
             _productTable.Remove(product);
         }
 
-        public void UpdatePrice(Product product, double price)
+        public Product UpdatePrice(Product monkeyButt, double price)
         {
-            product.Price = price;
+            Product updatedProduct = new Product();
+            string sqlStr = $"UPDATE Product SET Price= {price} WHERE Id={monkeyButt.Id}";  
+            dbManager.Update(sqlStr);
+            string showMe = $"SELECT * FROM Product WHERE Id={monkeyButt.Id}";
+            dbManager.Query(showMe, (SqliteDataReader reader) =>
+            {
+                while (reader.Read())
+                {
+                    updatedProduct.Id = Convert.ToInt32(reader["Id"]);
+                    updatedProduct.Name = Convert.ToString(reader["Name"]);
+                    updatedProduct.Price = Convert.ToDouble(reader["Price"]);
+
+                }
+            });
+
+            return updatedProduct;
+        }
+        public List<Product> FilteredProducts(int ActiveCustomerId, List<Product> listProducts)
+        {
+            List<Product> filteredList = new List<Product>();
+            foreach (Product p in listProducts)
+            {
+                if (p.CustomerId == ActiveCustomerId)
+                {
+                    filteredList.Add(p);
+                }
+            }
+            return filteredList;
         }
 
         public void UpdateSingleProduct(Product product)

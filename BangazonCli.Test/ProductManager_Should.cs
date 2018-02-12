@@ -78,8 +78,6 @@ namespace BangazonCli.Test
         [Fact]
         public void ListAllProducts()
         {
-            // DatabaseManager dbManager = new DatabaseManager("BangazonTestDB");
-            // dbManager.CheckCustomerTable();
             ProductManager productmanager = new ProductManager("BangazonTestDB");
             CustomerManager customerManager = new CustomerManager("BangazonTestDB");
             Customer newCust = customerManager.Add(_customer2);
@@ -103,6 +101,31 @@ namespace BangazonCli.Test
                 }
             }
             Assert.True(movieExists);
+        }
+
+        [Fact]
+        public void FilterProduct_Should()
+        {
+            ProductManager productmanager = new ProductManager("BangazonTestDB");
+            CustomerManager customerManager = new CustomerManager("BangazonTestDB");
+            Customer newCust = customerManager.Add(_customer2);
+            customerManager.ActivateCustomer(newCust.Id);
+            Product _product2 = new Product(
+                customerManager.ActiveCustomer.Id,
+                45.27,
+                "Movie",
+                "Instructional Film about See Sherp",
+                8,
+                0,
+                dt
+            );
+            List<Product> listProduct = productmanager.GetAllProducts();
+            List<Product> filteredList = productmanager.FilteredProducts(customerManager.ActiveCustomer.Id, listProduct);
+            
+            foreach (Product p in filteredList)
+            {
+                Assert.Equal(p.CustomerId, customerManager.ActiveCustomer.Id);
+            }
         }
 
         [Fact]
@@ -133,12 +156,13 @@ namespace BangazonCli.Test
                 0,
                 dt
             );
-            Product newProd = productManager.Add(_product2);
             List<Product> listProduct = productManager.GetAllProducts();
+            List<Product> filteredList = productManager.FilteredProducts(customerManager.ActiveCustomer.Id, listProduct);
+            Product productToEdit = productManager.GetSingleProduct(2);
+            Product updatedProduct = productManager.UpdatePrice(productToEdit, 38.99);
 
-            productManager.UpdateSingleProduct(_product);
+            Assert.Equal(38.99, updatedProduct.Price);
 
-            Assert.Equal(1, _product.Id);
         }
 
         // [Fact]
