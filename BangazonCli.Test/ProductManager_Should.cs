@@ -3,16 +3,19 @@ using BangazonCli;
 using System.Collections.Generic;
 using Xunit;
 
-namespace BangazonCli.Test {
-    public class ProductManager_Should {
+namespace BangazonCli.Test
+{
+    public class ProductManager_Should
+    {
         private Product _product;
         private Customer _customer;
         private Customer _customer2;
         private DateTime dt = DateTime.Now;
 
-        public ProductManager_Should () {
+        public ProductManager_Should()
+        {
 
-            _product = new Product (
+            _product = new Product(
                 1,
                 1,
                 12.55,
@@ -23,7 +26,7 @@ namespace BangazonCli.Test {
                 dt
             );
 
-            _customer = new Customer (
+            _customer = new Customer(
                 1,
                 "Chaz",
                 "Vanderbilt",
@@ -36,7 +39,7 @@ namespace BangazonCli.Test {
                 DateTime.Now
             );
 
-            _customer2 = new Customer (
+            _customer2 = new Customer(
                 "Bootsy",
                 "Collins",
                 "Outer Space",
@@ -50,13 +53,36 @@ namespace BangazonCli.Test {
         }
 
         [Fact]
-        public void AddProduct () {
-            CustomerManager customerManager = new CustomerManager ("BangazonTestDB");
-            ProductManager productmanager = new ProductManager ("BangazonTestDB");
+        public void AddProduct()
+        {
+            CustomerManager customerManager = new CustomerManager("BangazonTestDB");
+            ProductManager productmanager = new ProductManager("BangazonTestDB");
             Customer newCust = customerManager.Add(_customer2);
             customerManager.ActivateCustomer(newCust.Id);
 
-                Product _product2 = new Product (
+            Product _product2 = new Product(
+            customerManager.ActiveCustomer.Id,
+            45.27,
+            "Movie",
+            "Instructional Film about See Sherp",
+            8,
+            0,
+            dt
+        );
+
+
+            Product newProduct = productmanager.Add(_product2);
+            Assert.Equal("Movie", newProduct.Name);
+        }
+
+        [Fact]
+        public void ListAllProducts()
+        {
+            ProductManager productmanager = new ProductManager("BangazonTestDB");
+            CustomerManager customerManager = new CustomerManager("BangazonTestDB");
+            Customer newCust = customerManager.Add(_customer2);
+            customerManager.ActivateCustomer(newCust.Id);
+            Product _product2 = new Product(
                 customerManager.ActiveCustomer.Id,
                 45.27,
                 "Movie",
@@ -65,40 +91,87 @@ namespace BangazonCli.Test {
                 0,
                 dt
             );
-
-
-            Product newProduct = productmanager.Add (_product2);
-            Assert.Equal ("Movie", newProduct.Name);
+            List<Product> listProduct = productmanager.GetAllProducts();
+            bool movieExists = false;
+            foreach (Product p in listProduct)
+            {
+                if (p.Name == "Movie")
+                {
+                    movieExists = true;
+                }
+            }
+            Assert.True(movieExists);
         }
 
         [Fact]
-        public void ListAllProducts () {
-            ProductManager productmanager = new ProductManager ("BangazonTestDB");
-            productmanager.Add (_product);
-            List<Product> listProduct = productmanager.GetAllProducts ();
-            Assert.Contains (_product, listProduct);
+        public void FilterProduct_Should()
+        {
+            ProductManager productmanager = new ProductManager("BangazonTestDB");
+            CustomerManager customerManager = new CustomerManager("BangazonTestDB");
+            Customer newCust = customerManager.Add(_customer2);
+            customerManager.ActivateCustomer(newCust.Id);
+            Product _product2 = new Product(
+                customerManager.ActiveCustomer.Id,
+                45.27,
+                "Movie",
+                "Instructional Film about See Sherp",
+                8,
+                0,
+                dt
+            );
+            List<Product> listProduct = productmanager.GetAllProducts();
+            List<Product> filteredList = productmanager.FilteredProducts(customerManager.ActiveCustomer.Id, listProduct);
+            
+            foreach (Product p in filteredList)
+            {
+                Assert.Equal(p.CustomerId, customerManager.ActiveCustomer.Id);
+            }
         }
 
         [Fact]
-        public void RemoveProduct () {
-            ProductManager productmanager = new ProductManager ("BangazonTestDB");
-            productmanager.Add (_product);
-            List<Product> listProduct = productmanager.GetAllProducts ();
+        public void RemoveProduct()
+        {
+            ProductManager productmanager = new ProductManager("BangazonTestDB");
+            productmanager.Add(_product);
+            List<Product> listProduct = productmanager.GetAllProducts();
 
-            productmanager.RemoveSingleProduct (_product);
+            productmanager.RemoveSingleProduct(_product);
 
-            Assert.DoesNotContain (_product, listProduct);
+            Assert.DoesNotContain(_product, listProduct);
         }
 
         [Fact]
-        public void UpdateProduct () {
-            ProductManager productmanager = new ProductManager ("BangazonTestDB");
-            productmanager.Add (_product);
-            List<Product> listProduct = productmanager.GetAllProducts ();
+        public void UpdateProduct()
+        {
+            ProductManager productManager = new ProductManager("BangazonTestDB");
+            CustomerManager customerManager = new CustomerManager("BangazonTestDB");
+            Customer newCust = customerManager.Add(_customer2);
+            customerManager.ActivateCustomer(newCust.Id);
+            Product _product2 = new Product(
+                customerManager.ActiveCustomer.Id,
+                45.27,
+                "Movie",
+                "Instructional Film about See Sherp",
+                8,
+                0,
+                dt
+            );
+            List<Product> listProduct = productManager.GetAllProducts();
+            List<Product> filteredList = productManager.FilteredProducts(customerManager.ActiveCustomer.Id, listProduct);
+            Product productToEdit = productManager.GetSingleProduct(2);
+            Product updatedProduct = productManager.UpdatePrice(productToEdit, 38.99);
 
-            productmanager.UpdateSingleProduct (_product);
+            Assert.Equal(38.99, updatedProduct.Price);
 
-            Assert.Equal (1, _product.Id);
         }
+
+        // [Fact]
+        // public void CreateProductOrderJoin () {
+        //     ProductManager productmanager = new ProductManager ("BangazonTestDB");
+        //     CustomerManager customerManager = new CustomerManager
+        //     productmanager.Add (_product);
+        //     List<Product> listProduct = productmanager.GetAllProducts ();
+        //     Assert.Contains (_product, listProduct);
+        // }
     }
 }
