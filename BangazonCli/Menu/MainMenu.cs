@@ -1,18 +1,36 @@
 using System;
 
-namespace BangazonCli.Menu
-{
-    public class MainMenu
-    {
-        public static int Show()
-        {
-            Console.Clear();
+namespace BangazonCli.Menu {
+    public class MainMenu {
+        public static int Show () {
+            Console.Clear ();
 
+            Console.WriteLine ("####### ####### #        #####     #     # ");
+            Console.WriteLine ("#       #       #       #     #    ##    # ");
+            Console.WriteLine ("#       #       #       #          # #   # ");
+            Console.WriteLine ("#####   #####   #        #####     #  #  # ");
+            Console.WriteLine ("#       #       #             #    #   # # ");
+            Console.WriteLine ("#       #       #       #     #    #    ## ");
+            Console.WriteLine ("####### ####### #######  #####     #     # ");
+            Console.WriteLine (" ");
+            Console.WriteLine ("######  #######    #    #        #####  ");
+            Console.WriteLine ("#     # #         # #   #       #     # ");
+            Console.WriteLine ("#     # #        #   #  #       #       ");
+            Console.WriteLine ("#     # #####   #     # #        #####  ");
+            Console.WriteLine ("#     # #       ####### #             # ");
+            Console.WriteLine ("#     # #       #     # #       #     # ");
+            Console.WriteLine ("######  ####### #     # #######  #####  ");
+            Console.WriteLine (" ");
+
+            Console.WriteLine ("Authors: Courtney, Garrett, John, and Lissa");
+            Console.WriteLine (" ");
+            
             Console.WriteLine ("*********************************************************");
             Console.WriteLine ("**                Welcome to Bangazon!                 **");
             Console.WriteLine ("**           Select a choice from the menu             **");
             Console.WriteLine ("*********************************************************");
-            
+            Console.WriteLine (" ");
+
             Console.WriteLine ("1. Create a customer account");
             Console.WriteLine ("2. Choose active customer");
             Console.WriteLine ("3. Create a payment option");
@@ -23,12 +41,11 @@ namespace BangazonCli.Menu
             Console.WriteLine ("8. View Reports");
             Console.WriteLine ("9. Leave Bangazon!");
 
-
             Console.Write ("> ");
-            ConsoleKeyInfo enteredKey = Console.ReadKey();
-            Console.WriteLine("");
+            ConsoleKeyInfo enteredKey = Console.ReadKey ();
+            Console.WriteLine ("");
             int output = 0;
-            int.TryParse(enteredKey.KeyChar.ToString(), out output);
+            int.TryParse (enteredKey.KeyChar.ToString (), out output);
             return output;
         }
 
