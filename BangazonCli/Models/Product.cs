@@ -23,6 +23,17 @@ namespace BangazonCli {
             this.CreatedOn = createdOn;
         }
 
+        public Product (int customerId, double price, string name, string description, int quantity, int quantitySold, DateTime createdOn)
+        {
+            this.CustomerId = customerId;
+            this.Price = price;
+            this.Name = name;
+            this.Description = description;
+            this.Quantity = quantity;
+            this.QuantitySold = quantitySold;
+            this.CreatedOn = createdOn;      
+        }
+
         public Product ()
         {
             this.Id = 0;

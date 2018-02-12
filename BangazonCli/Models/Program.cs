@@ -12,7 +12,28 @@ namespace BangazonCli
         {
             Console.WriteLine("You can do anything you want");
 
+            Console.WriteLine ("*********************************************************");            
+            Console.WriteLine ("****************************************************** **");
+            Console.WriteLine ("*      ****      ****  *******      ******    ****  *  **");
+            Console.WriteLine ("*  ********  ********  *******  **********  ** ***  *****");
+            Console.WriteLine ("*      ****      ****  *******      ******  *** **  *****");
+            Console.WriteLine ("*  ********  ********  ***********  ******  **** *  *****");
+            Console.WriteLine ("*      ****      ****       **      ******  *****   *****");
+            Console.WriteLine ("*********************************************************");
+            Console.WriteLine ("**********     ****      *****  ******  ********      ***");
+            Console.WriteLine ("**********  **  ***  ********  *  ****  ********  *******");
+            Console.WriteLine ("**********  ***  **      ***       ***  ********      ***");
+            Console.WriteLine ("**********  **  ***  ******  *****  **  ************  ***");
+            Console.WriteLine ("**********    *****      *  *******  *        **      ***");
+            Console.WriteLine ("*********************************************************");
+            Console.Clear();
+            
+            
+            
+                                                                
+
             int menuSelection;
+            ProductManager productManager = new ProductManager("BangazonDB");
             CustomerManager customerManager = new CustomerManager("BangazonDB");
             PaymentTypeManager paymentTypeManager = new PaymentTypeManager("BangazonDB");
 
@@ -91,7 +112,7 @@ namespace BangazonCli
 
                             Console.WriteLine($"{newestPaymentType.Name} #{newestPaymentType.AccountNumber} created for {customerManager.ActiveCustomer.FirstName} {customerManager.ActiveCustomer.LastName}, press any key to continue");
                             Console.ReadLine();
-                            
+
                         } else 
                         {
                             Console.WriteLine("Please set a customer to active before creating a payment type, press any key to return to the main menu");
@@ -101,6 +122,42 @@ namespace BangazonCli
                         break;
                     case 4:
                         //add product to active customer
+
+                        if (customerManager.ActiveCustomer.Id != 0)
+                        {
+                            Console.WriteLine("Enter Product Name");
+                            string productName = Console.ReadLine();
+                            Console.WriteLine("Enter Product Description");
+                            string productDescription = Console.ReadLine();
+                            Console.WriteLine("Enter Product Price (ex: 14.99)");
+                            double productPrice = Convert.ToDouble(Console.ReadLine());
+                            Console.WriteLine("Enter number of available units");
+                            int quantity = Convert.ToInt32(Console.ReadLine());
+                            Console.WriteLine("Is the information entered correct? (y/n)");
+                            string answer = Console.ReadLine();
+
+                            if (answer == "y" || answer == "Y")
+                            {
+                                Product newProduct = new Product(
+                                    customerManager.ActiveCustomer.Id,
+                                    productPrice,
+                                    productName,
+                                    productDescription,
+                                    quantity,
+                                    0,
+                                    DateTime.Now
+                                );
+
+                                Product newestProduct = productManager.Add(newProduct);
+
+                                Console.WriteLine($"{customerManager.ActiveCustomer.FirstName}'s {newestProduct.Name} was succesfully added to the system, press any key to continue");
+                                Console.ReadLine();
+                            }
+                        } else
+                        {
+                            Console.WriteLine("Please set a customer to active before creating a product, press any key to return to the main menu");
+                            Console.ReadLine(); 
+                        }
 
                         break;
                     case 5:
