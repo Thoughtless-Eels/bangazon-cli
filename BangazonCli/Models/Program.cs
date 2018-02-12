@@ -14,6 +14,7 @@ namespace BangazonCli
 
             int menuSelection;
             CustomerManager customerManager = new CustomerManager("BangazonDB");
+            PaymentTypeManager paymentTypeManager = new PaymentTypeManager("BangazonDB");
 
             do
             {
@@ -77,7 +78,20 @@ namespace BangazonCli
                         //create payment option
                         if (customerManager.ActiveCustomer.Id != 0) 
                         {
+                            Console.WriteLine("Enter Payment Type (e.g. AMEX, VISA, MC, ect.)");
+                            string paymentType = Console.ReadLine();
+                            Console.WriteLine("Account Number");
+                            string accountNumber = Console.ReadLine();
+                            PaymentType newPaymentType = new PaymentType(
+                                paymentType,
+                                accountNumber,
+                                customerManager.ActiveCustomer.Id
+                            );
+                            PaymentType newestPaymentType = paymentTypeManager.AddPaymentType(newPaymentType);
 
+                            Console.WriteLine($"{newestPaymentType.Name} #{newestPaymentType.AccountNumber} created for {customerManager.ActiveCustomer.FirstName} {customerManager.ActiveCustomer.LastName}, press any key to continue");
+                            Console.ReadLine();
+                            
                         } else 
                         {
                             Console.WriteLine("Please set a customer to active before creating a payment type, press any key to return to the main menu");
