@@ -17,10 +17,10 @@ Bangazon CLI is a command line application built entirely using C#. This applica
 In order to use the Interface, you must have a firm grasp on using the Terminal on your machine.
 
 1. First clone or download this repository (located in the upper right)
-![clone](https://imgur.com/t5lLdKk)
+![clone](https://i.imgur.com/t5lLdKk.png)
 
 1. This is a .NET application, and requires the user to download .NET. Download [Here](https://www.microsoft.com/net/learn/get-started/macos)
-![net](https://imgur.com/g1LBsSU)
+![net](https://i.imgur.com/g1LBsSU.png)
 
 1. Open Terminal, locate the directory where you saved or cloned the application. [More on Terminal navigation here](https://www.macworld.com/article/2042378/master-the-command-line-navigating-files-and-folders.html)
 ![navigation](https://i.imgur.com/f1CHuuk.png)
@@ -31,4 +31,9 @@ In order to use the Interface, you must have a firm grasp on using the Terminal 
 1. You will Be presented with the Bangazon CLI menu and the app is officially installed and running, enjoy.
 ![menu](https://i.imgur.com/U4F52kh.png)
 
+---
+
+## ERD
+
+![ERD](https://i.imgur.com/ueXLMuF.png)
 

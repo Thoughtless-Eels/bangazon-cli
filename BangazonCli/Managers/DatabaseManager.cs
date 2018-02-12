@@ -41,6 +41,7 @@ namespace BangazonCli
             return insertedItemId;
         }
 
+
         public void Query(string command, Action<SqliteDataReader> handler)
         {
             using (_connection)
@@ -55,6 +56,19 @@ namespace BangazonCli
                 }
 
                 dbcmd.Dispose ();
+            }
+        }
+
+        public void Update(string command)
+        {
+            using (_connection)
+            {
+                _connection.Open ();
+                SqliteCommand dbcmd = _connection.CreateCommand ();
+                dbcmd.CommandText = command;
+                dbcmd.ExecuteNonQuery ();
+                dbcmd.Dispose ();
+
             }
         }
 
@@ -104,6 +118,7 @@ namespace BangazonCli
                 dbcmd.ExecuteNonQuery();
                 dbcmd.Dispose();
                 _connection.Close();
+                Console.WriteLine("Created Customer Table!!!");
             }
         }
 
