@@ -7,9 +7,11 @@ namespace BangazonCli.Test {
     public class ProductManager_Should {
         private Product _product;
         private Customer _customer;
+        private Customer _customer2;
         private DateTime dt = DateTime.Now;
 
         public ProductManager_Should () {
+
             _product = new Product (
                 1,
                 1,
@@ -20,6 +22,7 @@ namespace BangazonCli.Test {
                 72,
                 dt
             );
+
             _customer = new Customer (
                 1,
                 "Chaz",
@@ -32,13 +35,40 @@ namespace BangazonCli.Test {
                 DateTime.Now,
                 DateTime.Now
             );
+
+            _customer2 = new Customer (
+                "Bootsy",
+                "Collins",
+                "Outer Space",
+                "1000 the moon",
+                "MOON",
+                "102938",
+                "123-987-3476",
+                DateTime.Now,
+                DateTime.Now
+            );
         }
 
         [Fact]
         public void AddProduct () {
+            CustomerManager customerManager = new CustomerManager ("BangazonTestDB");
             ProductManager productmanager = new ProductManager ("BangazonTestDB");
-            Product newProduct = productmanager.Add (_product);
-            Assert.Equal ("Book", newProduct.Name);
+            Customer newCust = customerManager.Add(_customer2);
+            customerManager.ActivateCustomer(newCust.Id);
+
+                Product _product2 = new Product (
+                customerManager.ActiveCustomer.Id,
+                45.27,
+                "Movie",
+                "Instructional Film about See Sherp",
+                8,
+                0,
+                dt
+            );
+
+
+            Product newProduct = productmanager.Add (_product2);
+            Assert.Equal ("Movie", newProduct.Name);
         }
 
         [Fact]
