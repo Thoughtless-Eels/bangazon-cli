@@ -373,7 +373,7 @@ namespace BangazonCli {
                         break;
                     case 8:
                         //view reports
-                        Console.WriteLine("Fuck Off");
+                        Console.WriteLine("hi Hannah");
                         Console.ReadKey();
 
                         break;
