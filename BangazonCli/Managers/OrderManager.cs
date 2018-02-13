@@ -20,16 +20,16 @@ namespace BangazonCli
         {
             dbManager.CheckTables();
             Order emptyOrder = new Order(); 
-            string sql = $"INSERT into CustomerOrder (Id, PaymentId, CustomerId, StartedOn) VALUES (null, null, '{order.CustomerId}', '{order.StartedOn}')";
+            string sql = $"INSERT into CustomerOrder (Id, PaymentId, CustomerId, StartedOn) VALUES (null, '{order.PaymentId}', '{order.CustomerId}', '{order.StartedOn}')";
             int lastInsertId = dbManager.Insert(sql);
             string sqlSelect = $"SELECT * FROM CustomerOrder WHERE CustomerOrder.Id={lastInsertId}";
             dbManager.Query(sqlSelect, (SqliteDataReader reader) =>
             {
                 while (reader.Read())
                 {
-                    emptyOrder.Id = reader.GetInt32(0);
-                    emptyOrder.CustomerId = reader.GetInt32(2);
-                    emptyOrder.StartedOn = reader.GetDateTime(3);
+                    emptyOrder.Id = Convert.ToInt32(reader["Id"]);
+                    emptyOrder.CustomerId = Convert.ToInt32(reader["CustomerId"]);
+                    emptyOrder.StartedOn = Convert.ToDateTime(reader["StartedOn"]);
                 }
             });
 
@@ -39,6 +39,43 @@ namespace BangazonCli
         public Order GetSingleOrder (int orderId) 
         {
             return Orders.Where(o => o.Id == orderId).Single();
+        }
+
+        public int ActiveCustOrderCheck (int activeCustId)
+        {
+            int orderOpen = 0;
+
+            List<Order> orders = this.GetAllOrders();
+
+            foreach (Order o in orders)
+            {
+                if (o.CustomerId == activeCustId && o.PaymentId != 0)
+                {
+                    orderOpen = o.Id;
+                }
+            }
+
+            return orderOpen;
+        }
+
+        public List<Order> GetAllOrders ()
+        {
+            List<Order> orders = new List<Order>();
+
+            string sqlSelect = $"SELECT * FROM CustomerOrder";
+            dbManager.Query(sqlSelect, (SqliteDataReader reader) =>
+            {
+                while (reader.Read())
+                {
+                    Order newOrder = new Order();
+                    newOrder.Id = Convert.ToInt32(reader["Id"]);
+                    newOrder.CustomerId = Convert.ToInt32(reader["CustomerId"]);
+                    newOrder.StartedOn = Convert.ToDateTime(reader["StartedOn"]);
+                    newOrder.PaymentId = Convert.ToInt32(reader["PaymentId"]);
+                    orders.Add(newOrder);                                        
+                }
+            });
+            return orders;
         }
 
         public void CompleteOrder(int orderId, int paymentTypeId)
