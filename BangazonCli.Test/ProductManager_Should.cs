@@ -61,14 +61,14 @@ namespace BangazonCli.Test
             customerManager.ActivateCustomer(newCust.Id);
 
             Product _product2 = new Product(
-            customerManager.ActiveCustomer.Id,
-            45.27,
-            "Movie",
-            "Instructional Film about See Sherp",
-            8,
-            0,
-            dt
-        );
+                    customerManager.ActiveCustomer.Id,
+                    45.27,
+                    "Movie",
+                    "Instructional Film about See Sherp",
+                    8,
+                    0,
+                    dt
+                );
 
 
             Product newProduct = productmanager.Add(_product2);
@@ -141,6 +141,47 @@ namespace BangazonCli.Test
         }
 
         [Fact]
+        public void addProductToOrder()
+        {
+            CustomerManager customerManager = new CustomerManager("BangazonTestDB");
+            ProductManager productManager = new ProductManager("BangazonTestDB");
+            OrderManager orderManager = new OrderManager("BangazonTestDB");
+
+
+            Customer newCust = customerManager.Add(_customer2);
+            customerManager.ActivateCustomer(newCust.Id);
+
+            Order newOrder = new Order(
+                customerManager.ActiveCustomer.Id,
+                dt
+
+            );
+            Order newestOrder = orderManager.StoreOrder(newOrder);
+
+            Product _product2 = new Product(
+                    customerManager.ActiveCustomer.Id,
+                    45.27,
+                    "Movie",
+                    "Instructional Film about See Sherp",
+                    8,
+                    0,
+                    dt
+                );
+
+            Product newProduct = productManager.Add(_product2);
+
+            ProductOrderJoin newPOJ = new ProductOrderJoin(
+                newestOrder.Id,
+                newProduct.Id
+            );
+
+            ProductOrderJoin freshPOJ = productManager.storeProductOrderJoin(newPOJ);
+
+            Assert.Equal(newestOrder.Id, freshPOJ.OrderId);
+
+        }
+
+        [Fact]
         public void UpdateProduct()
         {
             ProductManager productManager = new ProductManager("BangazonTestDB");
@@ -159,9 +200,17 @@ namespace BangazonCli.Test
             List<Product> listProduct = productManager.GetAllProducts();
             List<Product> filteredList = productManager.FilteredProducts(customerManager.ActiveCustomer.Id, listProduct);
             Product productToEdit = productManager.GetSingleProduct(2);
-            Product updatedProduct = productManager.UpdatePrice(productToEdit, 38.99);
+            Product updatedProduct1 = productManager.UpdatePrice(productToEdit, 38.99);
+            Product updatedProduct2 = productManager.UpdateTitle(productToEdit, "Bonkers");
+            Product updatedProduct3 = productManager.UpdateDescription(productToEdit, "Cows are Nuts");
+            Product updatedProduct4 = productManager.UpdateQuantity(productToEdit, 2);
+                                    
 
-            Assert.Equal(38.99, updatedProduct.Price);
+            Assert.Equal(38.99, updatedProduct1.Price);
+            Assert.Equal("Bonkers", updatedProduct2.Name);
+            Assert.Equal("Cows are Nuts", updatedProduct3.Description);
+            Assert.Equal(2, updatedProduct4.Quantity);
+                                    
 
         }
 

@@ -10,6 +10,8 @@ namespace BangazonCli.Test {
         private Order _order;
         private PaymentType _paymentType;
         private Customer _customer;
+        private Customer _customer2;
+        
         private Product _product;
 
         private DateTime _dt = DateTime.Now;
@@ -24,6 +26,18 @@ namespace BangazonCli.Test {
                 "TN",
                 "37027",
                 "615-555-1234",
+                _dt,
+                _dt
+            );
+
+            _customer2 = new Customer (
+                "KIKI",
+                "OALALALA",
+                "777 HAAHA way",
+                "Brentwood",
+                "TN",
+                "37227",
+                "615-455-1284",
                 _dt,
                 _dt
             );
@@ -72,22 +86,46 @@ namespace BangazonCli.Test {
 
             CustomerManager customerManager = new CustomerManager ("BangazonTestDB");
             OrderManager orderManager = new OrderManager ("BangazonTestDB");
-            customerManager.Add (_customer);
-            customerManager.ActivateCustomer (_customer.Id);
+            Customer newCust = customerManager.Add (_customer2);
+            customerManager.ActivateCustomer (newCust.Id);
             _order = new Order (
-                1,
                 customerManager.ActiveCustomer.Id,
                 0,
                 _dt
             );
-            orderManager.StoreOrder (_order);
-            orderManager.CompleteOrder (_order.Id, _paymentType.Id);
-            Order updatedOrder = orderManager.GetSingleOrder (1);
-            Assert.Equal (1, updatedOrder.PaymentId);
+            Order thatOrder = orderManager.StoreOrder (_order);
+            Order newOrd = orderManager.CompleteOrder(thatOrder.Id, _paymentType.Id);
+            Order updatedOrder = orderManager.GetSingleOrder(newOrd.Id);
+            Assert.Equal(_paymentType.Id, updatedOrder.PaymentId);
         }
 
-        // Fact]
+        [Fact]
+        public void GetAllOrders_Should () 
+        {
+            OrderManager orderManager = new OrderManager ("BangazonTestDB");
+            CustomerManager customerManager = new CustomerManager ("BangazonTestDB");
+            customerManager.Add (_customer2);
+            
+            _order = new Order (
+                customerManager.ActiveCustomer.Id,
+                0,
+                _dt
+            );
+            Order freshOrder = orderManager.StoreOrder (_order);
 
-        // public void 
+            List<Order> orders = orderManager.GetAllOrders();
+            bool orderPassed = false;
+
+            foreach(Order o in orders)
+            {
+                if (o.CustomerId == customerManager.ActiveCustomer.Id)
+                {
+                    orderPassed = true;
+                }
+            } 
+
+            Assert.True(orderPassed);
+            
+        } 
     }
 }

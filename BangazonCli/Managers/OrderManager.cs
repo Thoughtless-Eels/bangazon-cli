@@ -38,7 +38,20 @@ namespace BangazonCli
 
         public Order GetSingleOrder (int orderId) 
         {
-            return Orders.Where(o => o.Id == orderId).Single();
+             Order newOrder = new Order();
+
+            string sqlSelect = $"SELECT * FROM CustomerOrder WHERE Id={orderId}";
+            dbManager.Query(sqlSelect, (SqliteDataReader reader) =>
+            {
+                while (reader.Read())
+                {
+                    newOrder.Id = Convert.ToInt32(reader["Id"]);
+                    newOrder.CustomerId = Convert.ToInt32(reader["CustomerId"]);
+                    newOrder.StartedOn = Convert.ToDateTime(reader["StartedOn"]);
+                    newOrder.PaymentId = Convert.ToInt32(reader["PaymentId"]);
+                }
+            });
+            return newOrder;
         }
 
         public int ActiveCustOrderCheck (int activeCustId)
@@ -49,13 +62,33 @@ namespace BangazonCli
 
             foreach (Order o in orders)
             {
-                if (o.CustomerId == activeCustId && o.PaymentId != 0)
+                if (o.CustomerId == activeCustId && o.PaymentId == 0)
                 {
                     orderOpen = o.Id;
                 }
             }
 
             return orderOpen;
+        }
+
+        public Order CompleteOrder (int orderId, int paymentTypeId)
+        {
+            Order updatedOrder = new Order();
+            string SqlCmd = $"UPDATE CustomerOrder SET PaymentId={paymentTypeId} WHERE Id={orderId}";
+            dbManager.Update(SqlCmd);
+            string LastIdSql = $"SELECT * FROM CustomerOrder WHERE Id={orderId}";
+            dbManager.Query(LastIdSql, (SqliteDataReader reader) =>
+            {
+                while (reader.Read())
+                {
+                    updatedOrder.Id = Convert.ToInt32(reader["Id"]);
+                    updatedOrder.CustomerId = Convert.ToInt32(reader["CustomerId"]);
+                    updatedOrder.PaymentId = Convert.ToInt32(reader["PaymentId"]);
+
+                }
+            });
+
+            return updatedOrder;
         }
 
         public List<Order> GetAllOrders ()
@@ -78,23 +111,6 @@ namespace BangazonCli
             return orders;
         }
 
-        public void CompleteOrder(int orderId, int paymentTypeId)
-        {
-
-                foreach(Order o in Orders)
-                {
-                    if (o.Id == orderId)
-                    {
-                        // Type type = o.GetType();
-
-                        // PropertyInfo prop = type.GetProperty("PaymentId");
-
-                        // prop.SetValue (type, prop, paymentTypeId);
-                        
-                        o.PaymentId = paymentTypeId;
-                    }
-                }
-        }
 
     }
 }

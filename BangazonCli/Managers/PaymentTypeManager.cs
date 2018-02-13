@@ -44,10 +44,26 @@ namespace BangazonCli
             return emptyPt;
         }
 
-        public List<PaymentType> GetAllPaymentTypes()
+        public List<PaymentType> GetCustomerPaymentTypes(int id)
         {
-            return _paymentTypeTable;
-            }
+            List<PaymentType> paymentOptions = new List<PaymentType>();
+            string sqlString = $"SELECT * FROM PaymentType WHERE CustomerId={id}";
+            dbManager.Query(sqlString, (SqliteDataReader reader) =>
+            {
+                while (reader.Read())
+                {
+                    PaymentType emptyPt = new PaymentType();
+                    emptyPt.Id = Convert.ToInt32(reader["Id"]);
+                    emptyPt.AccountNumber = Convert.ToString(reader["AccountNumber"]);
+                    emptyPt.Name = Convert.ToString(reader["Name"]);
+                    emptyPt.CustomerId = Convert.ToInt32(reader["CustomerId"]);
+
+                    paymentOptions.Add(emptyPt);
+                }
+            });
+        
+            return paymentOptions;
+        }
 
 
 

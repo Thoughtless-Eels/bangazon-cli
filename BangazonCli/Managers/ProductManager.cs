@@ -119,6 +119,48 @@ namespace BangazonCli
             return updatedProduct;
         }
 
+        public List<ProductOrderJoin> ListActiveOrderProducts (int id)
+        {
+
+            List<ProductOrderJoin> matchingJoins = new List<ProductOrderJoin>();
+
+            string sqlString = $"SELECT * FROM ProductOrderJoin WHERE OrderId={id}";
+
+            dbManager.Query(sqlString, (SqliteDataReader reader) =>
+            {
+                while (reader.Read())
+                {
+                    ProductOrderJoin poj = new ProductOrderJoin();
+
+                    poj.Id = Convert.ToInt32(reader["Id"]);
+                    poj.OrderId = Convert.ToInt32(reader["OrderId"]);
+                    poj.ProductId = Convert.ToInt32(reader["ProductId"]);
+
+                    matchingJoins.Add(poj);
+                }
+            });
+
+            return matchingJoins;
+        }
+
+        public double TotalProducts (List<ProductOrderJoin> mathingJoins)
+        {
+            double ticketTotal = 0;
+            foreach (ProductOrderJoin poj in mathingJoins)
+            {
+                string sqlString = $"SELECT Price FROM Product WHERE Id={poj.ProductId}";
+                dbManager.Query(sqlString, (SqliteDataReader reader) =>
+                {
+                    while (reader.Read())
+                    {
+                        ticketTotal += Convert.ToDouble(reader["Price"]);
+                    }
+                });
+            }
+
+            return ticketTotal;
+        }
+
         public Product UpdateDescription(Product monkeyButt, string description)
         {
             Product updatedProduct = new Product();

@@ -243,7 +243,7 @@ namespace BangazonCli
                                 double numberOfProducts = products.Count;
                                 double listLength = numberOfProducts + 1;
                                 double lastId = 0;
-                                double selection = 0;
+                                int selection = 0;
 
                                 do 
                                 {
@@ -264,15 +264,16 @@ namespace BangazonCli
                                     }
 
                                     Console.WriteLine("Select a Product to Add to Cart");
-                                    selection = Convert.ToDouble(Console.ReadLine());
+                                    selection = Convert.ToInt32(Console.ReadLine());
 
-                                    if (selection < lastId && selection > 0)
+                                    if (selection < lastId + 1 && selection > 0)
                                     {
-                                        int intCopy = Convert.ToInt32(selection);
-                                        ProductOrderJoin newPOj = new ProductOrderJoin(
+                                        ProductOrderJoin newPOJ = new ProductOrderJoin(
                                             newestOrder.Id,
-                                            intCopy
+                                            selection
                                         );
+
+                                        productManager.storeProductOrderJoin(newPOJ);
 
                                         Console.WriteLine("Product added successfully, press any key to continue");
                                         Console.ReadKey();
@@ -284,6 +285,49 @@ namespace BangazonCli
 
                             } else 
                             {
+                                Order activeOrder = orderManager.GetSingleOrder(activeOrderCheck);
+                                List<Product> products = productManager.GetAllProducts();
+                                double numberOfProducts = products.Count;
+                                double listLength = numberOfProducts + 1;
+                                double lastId = 0;
+                                int selection = 0;
+
+                                do 
+                                {
+                                    for (int i = 0; i < listLength; i++)
+                                    {
+                                        if (i != numberOfProducts)
+                                        {
+                                            double currentNumb = i +1;
+                                            Product currentProd = products[i];
+                                            Console.WriteLine($"{currentProd.Id}. {currentProd.Name}");
+                                            lastId = currentProd.Id;
+
+                                        } else 
+                                        {
+                                            double lastNumb = lastId + 1;
+                                            Console.WriteLine($"{lastNumb}. Done Adding Products? Return to Main Menu");
+                                        }
+                                    }
+
+                                    Console.WriteLine("Select a Product to Add to Cart");
+                                    selection = Convert.ToInt32(Console.ReadLine());
+
+                                    if (selection < lastId + 1 && selection > 0)
+                                    {
+                                        ProductOrderJoin newPOJ = new ProductOrderJoin(
+                                            activeOrder.Id,
+                                            selection
+                                        );
+
+                                        productManager.storeProductOrderJoin(newPOJ);
+                                        
+
+                                        Console.WriteLine("Product added successfully, press any key to continue");
+                                        Console.ReadKey();
+                                    }   
+
+                                } while (selection != lastId + 1);
 
                             }
 
@@ -299,14 +343,66 @@ namespace BangazonCli
                     case 7:
                         //complete an order
 
+                        if (customerManager.ActiveCustomer.Id != 0)
+                        {
+                            int activeCheck = orderManager.ActiveCustOrderCheck(customerManager.ActiveCustomer.Id);
+
+                            if (activeCheck != 0)
+                            {
+                                Order activeOrder = orderManager.GetSingleOrder(activeCheck);
+                                List<ProductOrderJoin> pojs = productManager.ListActiveOrderProducts(activeOrder.Id);
+                                double orderTotal = productManager.TotalProducts(pojs);
+                                List<PaymentType> pts = paymentTypeManager.GetCustomerPaymentTypes(customerManager.ActiveCustomer.Id);
+                                double ptCount = pts.Count;
+                                Console.WriteLine($"Your Current Total is ${orderTotal}");
+                                Console.WriteLine("Please select a payment option");
+                                
+                                
+                                if (ptCount > 0)
+                                {
+
+                                    foreach (PaymentType pt in pts)
+                                    {
+                                        Console.WriteLine($"{pt.Id}. {pt.Name}#{pt.AccountNumber}");
+                                    }
+                                    int selection = Convert.ToInt32(Console.ReadLine());
+
+                                    Order completedOrder = orderManager.CompleteOrder(activeOrder.Id, selection);
+
+                                    Console.WriteLine($"Order #{completedOrder.Id} for {customerManager.ActiveCustomer.FirstName} is complete. Remember, you need the Eels, we got the Deals! ");
+                                    Console.ReadKey();
+                                } else 
+                                {
+                                    Console.WriteLine("Please add a payment type before proceeding");
+                                    Console.ReadKey();
+                                }
+
+
+
+                            } else 
+                            {
+                                Console.WriteLine("No open order, please add products to the shopping cart");
+                                Console.ReadKey();
+                            }
+                        } else
+                        {
+                            Console.WriteLine("Please set a customer to active before you even think about starting an order");
+                            Console.ReadKey();
+                        }
+
+
                         break;
                     case 8:
                         //view reports
+                        Console.WriteLine("Fuck Off");
+                        Console.ReadKey();
 
                         break;
                     case 9:
                         //Leave Bangazon
-
+                        Console.WriteLine("Peace out ᕙ(▀̿̿Ĺ̯̿̿▀̿ ̿) ᕗᕙ(▀̿̿Ĺ̯̿̿▀̿ ̿) ᕗᕙ(▀̿̿Ĺ̯̿̿▀̿ ̿) ᕗ");
+                        Console.ReadKey();
+                        menuSelection = 12;
                         break;
                 }
             } while (menuSelection < 10 & menuSelection > 0);
