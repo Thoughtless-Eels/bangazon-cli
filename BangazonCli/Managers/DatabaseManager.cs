@@ -84,9 +84,7 @@ namespace BangazonCli
                     `Id` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
                     `PaymentId` INTEGER,
                     `CustomerId` INTEGER NOT NULL,
-                    `StartedOn` TEXT NOT NULL,
-                    FOREIGN KEY(`PaymentId`) REFERENCES `PaymentType`(`Id`),
-                    FOREIGN KEY(`CustomerId`) REFERENCES `Customer`(`Id`))";
+                    `StartedOn` TEXT NOT NULL)";
 
                 dbcmd.ExecuteNonQuery();
                 dbcmd.Dispose();
@@ -112,8 +110,7 @@ namespace BangazonCli
                     `PostalCode` TEXT NOT NULL,
                     `PhoneNumber` TEXT NOT NULL,
                     `CreatedOn` TEXT NOT NULL,
-                    `LastLogin` TEXT NOT NULL 
-                    )";
+                    `LastLogin` TEXT NOT NULL)";
 
                 dbcmd.ExecuteNonQuery();
                 dbcmd.Dispose();

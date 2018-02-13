@@ -102,7 +102,7 @@ namespace BangazonCli
         public Product UpdatePrice(Product monkeyButt, double price)
         {
             Product updatedProduct = new Product();
-            string sqlStr = $"UPDATE Product SET Price= {price} WHERE Id={monkeyButt.Id}";  
+            string sqlStr = $"UPDATE Product SET Price={price} WHERE Id={monkeyButt.Id}";  
             dbManager.Update(sqlStr);
             string showMe = $"SELECT * FROM Product WHERE Id={monkeyButt.Id}";
             dbManager.Query(showMe, (SqliteDataReader reader) =>
@@ -118,6 +118,111 @@ namespace BangazonCli
 
             return updatedProduct;
         }
+
+        public List<ProductOrderJoin> ListActiveOrderProducts (int id)
+        {
+
+            List<ProductOrderJoin> matchingJoins = new List<ProductOrderJoin>();
+
+            string sqlString = $"SELECT * FROM ProductOrderJoin WHERE OrderId={id}";
+
+            dbManager.Query(sqlString, (SqliteDataReader reader) =>
+            {
+                while (reader.Read())
+                {
+                    ProductOrderJoin poj = new ProductOrderJoin();
+
+                    poj.Id = Convert.ToInt32(reader["Id"]);
+                    poj.OrderId = Convert.ToInt32(reader["OrderId"]);
+                    poj.ProductId = Convert.ToInt32(reader["ProductId"]);
+
+                    matchingJoins.Add(poj);
+                }
+            });
+
+            return matchingJoins;
+        }
+
+        public double TotalProducts (List<ProductOrderJoin> mathingJoins)
+        {
+            double ticketTotal = 0;
+            foreach (ProductOrderJoin poj in mathingJoins)
+            {
+                string sqlString = $"SELECT Price FROM Product WHERE Id={poj.ProductId}";
+                dbManager.Query(sqlString, (SqliteDataReader reader) =>
+                {
+                    while (reader.Read())
+                    {
+                        ticketTotal += Convert.ToDouble(reader["Price"]);
+                    }
+                });
+            }
+
+            return ticketTotal;
+        }
+
+        public Product UpdateDescription(Product monkeyButt, string description)
+        {
+            Product updatedProduct = new Product();
+            string sqlStr = $"UPDATE Product SET Description='{description}' WHERE Id={monkeyButt.Id}";  
+            dbManager.Update(sqlStr);
+            string showMe = $"SELECT * FROM Product WHERE Id={monkeyButt.Id}";
+            dbManager.Query(showMe, (SqliteDataReader reader) =>
+            {
+                while (reader.Read())
+                {
+                    updatedProduct.Id = Convert.ToInt32(reader["Id"]);
+                    updatedProduct.Name = Convert.ToString(reader["Name"]);
+                    updatedProduct.Price = Convert.ToDouble(reader["Price"]);
+                    updatedProduct.Description = Convert.ToString(reader["Description"]);
+
+                }
+            });
+
+            return updatedProduct;
+        }
+
+        public Product UpdateTitle(Product monkeyButt, string title)
+        {
+            Product updatedProduct = new Product();
+            string sqlStr = $"UPDATE Product SET Name='{title}' WHERE Id={monkeyButt.Id}";  
+            dbManager.Update(sqlStr);
+            string showMe = $"SELECT * FROM Product WHERE Id={monkeyButt.Id}";
+            dbManager.Query(showMe, (SqliteDataReader reader) =>
+            {
+                while (reader.Read())
+                {
+                    updatedProduct.Id = Convert.ToInt32(reader["Id"]);
+                    updatedProduct.Name = Convert.ToString(reader["Name"]);
+                    updatedProduct.Price = Convert.ToDouble(reader["Price"]);
+
+                }
+            });
+
+            return updatedProduct;
+        }
+
+        public Product UpdateQuantity(Product monkeyButt, int quant)
+        {
+            Product updatedProduct = new Product();
+            string sqlStr = $"UPDATE Product SET Quantity={quant} WHERE Id={monkeyButt.Id}";  
+            dbManager.Update(sqlStr);
+            string showMe = $"SELECT * FROM Product WHERE Id={monkeyButt.Id}";
+            dbManager.Query(showMe, (SqliteDataReader reader) =>
+            {
+                while (reader.Read())
+                {
+                    updatedProduct.Id = Convert.ToInt32(reader["Id"]);
+                    updatedProduct.Name = Convert.ToString(reader["Name"]);
+                    updatedProduct.Price = Convert.ToDouble(reader["Price"]);
+                    updatedProduct.Quantity = Convert.ToInt32(reader["Quantity"]);
+
+                }
+            });
+
+            return updatedProduct;
+        }
+
         public List<Product> FilteredProducts(int ActiveCustomerId, List<Product> listProducts)
         {
             List<Product> filteredList = new List<Product>();
@@ -139,5 +244,28 @@ namespace BangazonCli
         {
             product.CustomerId = customer.Id;
         }
+
+        public ProductOrderJoin storeProductOrderJoin(ProductOrderJoin poj)
+        {
+            ProductOrderJoin emptyPOJ = new ProductOrderJoin();
+            dbManager.CheckTables();
+            string pojSql = $"INSERT into ProductOrderJoin (Id, OrderId, ProductId) VALUES (null, '{poj.OrderId}', '{poj.ProductId}')";
+            int lastInsertId = dbManager.Insert(pojSql);
+            string sqlSelect = $"SELECT * FROM ProductOrderJoin WHERE ProductOrderJoin.Id={lastInsertId}";
+            dbManager.Query(sqlSelect, (SqliteDataReader reader) =>
+            {
+                while (reader.Read())
+                {
+
+                    emptyPOJ.Id = Convert.ToInt32(reader["Id"]);
+                    emptyPOJ.OrderId = Convert.ToInt32(reader["OrderId"]);
+                    emptyPOJ.ProductId = Convert.ToInt32(reader["ProductId"]);
+
+                }
+            });
+            return emptyPOJ;
+        }
+
+
     }
 }

@@ -13,6 +13,15 @@ namespace BangazonCli
             OrderId = orderId;
             ProductId = productId;
         }
+
+        public ProductOrderJoin ( int orderId, int productId)
+        {
+            OrderId = orderId;
+            ProductId = productId;   
+        }
+        public ProductOrderJoin ()
+        {
+        }
             
     }
 }

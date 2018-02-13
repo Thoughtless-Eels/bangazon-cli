@@ -18,6 +18,19 @@ namespace BangazonCli
             StartedOn = startedOn;
         }
 
+        public Order (int customerId, DateTime startedOn)
+        {
+            CustomerId = customerId;
+            StartedOn = startedOn;   
+        }
+
+        public Order (int customerId, int paymentId, DateTime startedOn)
+        {
+            CustomerId = customerId;
+            PaymentId = paymentId;
+            StartedOn = startedOn;   
+        }
+
         public Order ()
         {
             Id = 0;

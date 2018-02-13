@@ -63,7 +63,6 @@ namespace BangazonCli.Test
         [Fact]
         public void GetAllCustomers_Should()
         {
-            
             CustomerManager manager = new CustomerManager("BangazonTestDB");
             manager.Add(_customer1);
             manager.Add(_customer2);
